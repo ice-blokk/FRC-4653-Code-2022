@@ -24,6 +24,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -33,6 +34,8 @@ public class Drivetrain extends SubsystemBase {
   private final CANSparkMax frontLeft, frontRight, backLeft, backRight;
   private final MotorControllerGroup left, right;
   private final DifferentialDrive drive;
+
+  private int invert = 1;
 
   private final AHRS ahrs;
 
@@ -81,7 +84,7 @@ public class Drivetrain extends SubsystemBase {
     odometry = new DifferentialDriveOdometry(getHeading());
 
     leftEncoder = frontLeft.getEncoder();
-		rightEncoder = frontRight.getEncoder();
+	rightEncoder = frontRight.getEncoder();
 
   }
 
@@ -93,11 +96,12 @@ public class Drivetrain extends SubsystemBase {
 		drive.tankDrive(leftSpeed, rightSpeed);
 	}
 
-	public void arcadeDrive(double speed, double rotate, boolean squareInputs) {
-		drive.arcadeDrive(speed, rotate, squareInputs);
-	}
 	public void arcadeDrive(double speed, double rotate) {
 		drive.arcadeDrive(speed, rotate);
+	}
+	public void arcadeDrive(double speed, double rotate, boolean isInverted) {
+		if(isInverted) {invert *= -1;}
+		drive.arcadeDrive(speed * invert, rotate);
 	}
 
   // Gyro methods
@@ -157,7 +161,7 @@ public class Drivetrain extends SubsystemBase {
 		backRight.getEncoder().setPosition(0);
 	}
 
-  // TODO: get gear ratio of current drivetrain, put in constants
+  // TODO: get gear ratio of current drivetrain, put it in constants, change 7.31 in methods to constant
 
 	// Getting distance from encoder values
 	// getPosition() returns the amount of turns of the shaft, so to get distance (in inches)
@@ -206,5 +210,6 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
+	  SmartDashboard.putBoolean("Drivetrain Inverted", invert == -1);
   }
 }
