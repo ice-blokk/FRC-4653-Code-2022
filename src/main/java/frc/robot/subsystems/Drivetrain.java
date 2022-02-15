@@ -211,5 +211,8 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
 	  SmartDashboard.putBoolean("Drivetrain Inverted", invert == -1);
+	  
+	  SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
+	  SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
   }
 }

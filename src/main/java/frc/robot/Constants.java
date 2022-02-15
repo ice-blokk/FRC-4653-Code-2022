@@ -12,7 +12,8 @@ public final class Constants {
                             DRIVE_BACK_LEFT_ADDRESS = 3,
                             DRIVE_BACK_RIGHT_ADDRESS = 4;
 
-    public static final int INTAKE_ADDRESS = 1;
+    public static final int INTAKE_ADDRESS = 1,
+                            ARM_ADDRESS = 2;
 
 
     // Odometry + Trajectory Constants

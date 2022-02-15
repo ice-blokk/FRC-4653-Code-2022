@@ -12,10 +12,11 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-  private final TalonSRX intake;
+  private final TalonSRX intake, arm;
 
   public Intake() {
     intake = new TalonSRX(Constants.INTAKE_ADDRESS);
+    arm = new TalonSRX(Constants.ARM_ADDRESS);
   }
 
   public void intakeIn() {
