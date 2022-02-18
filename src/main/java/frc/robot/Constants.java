@@ -6,14 +6,33 @@ package frc.robot;
 
 public final class Constants {
 
-    // Drive motor ports (Sparks)
+    // Drive motor ports (all sparks)
     public static final int DRIVE_FRONT_LEFT_ADDRESS = 1,
                             DRIVE_FRONT_RIGHT_ADDRESS = 2,
                             DRIVE_BACK_LEFT_ADDRESS = 3,
                             DRIVE_BACK_RIGHT_ADDRESS = 4;
 
-    public static final int INTAKE_ADDRESS = 1,
-                            ARM_ADDRESS = 2;
+    // Intake constants
+    public static final int INTAKE_ADDRESS = 99, // talon
+                            ARM_ADDRESS = 99; // talon
+
+    // Turret constants
+    public static final int TURRET_ADDRESS = 99, // talon
+                            TURRET_FWD_HALL_EFFECT = 99,
+                            TURRET_REV_HALL_EFFECT = 99,
+
+                            kTurretSlotIdx = 0,
+                            kTurretPIDLoopIdx = 0,
+
+                            kTurretP = 99,
+                            kTurretI = 99,
+                            kTurretD = 99,
+                            kTurretF = 99,
+
+                            kSoftMaxTurretAngle = 99,
+                            kSoftMinTurretAngle = 99,
+                            kTurretRotationsPerTick = 99;
+
 
 
     // Odometry + Trajectory Constants
