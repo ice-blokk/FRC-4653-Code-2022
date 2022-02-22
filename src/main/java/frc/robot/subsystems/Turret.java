@@ -20,7 +20,8 @@ import frc.robot.Constants;
 public class Turret extends SubsystemBase {
 
   private TalonSRX turret;
-  private DigitalInput fwdHallEffect, revHallEffect; // hall effects for limit switches (idk if i'm gonna use this with soft limits or at all)
+  private DigitalInput fwdHallEffect, revHallEffect; // hall effects for limit switches
+  //  (idk if i'm gonna use this with soft limits or just the hall effects or at all)
 
   public Turret() {
     turret = new TalonSRX(Constants.TURRET_ADDRESS);
@@ -57,9 +58,32 @@ public class Turret extends SubsystemBase {
     turret.set(ControlMode.Position, angle.getRadians() / (2 * Math.PI * Constants.kTurretRotationsPerTick));
   }
 
+  public boolean getFwdHallEffect() {
+    return fwdHallEffect.get();
+  }
+
+  public boolean getRevHallEffect() {
+    return revHallEffect.get();
+  }
+
   // Manually move the turret (in percent mode)
   public void setOpenLoop(double speed) {
-    turret.set(ControlMode.PercentOutput, speed);
+    if(speed > 0) {
+      if(!getFwdHallEffect()) {
+        turret.set(ControlMode.PercentOutput, speed);
+      }
+      else {
+        turret.set(ControlMode.PercentOutput, 0);
+      }
+    }
+    else if(speed < 0){
+      if(!getRevHallEffect()) {
+        turret.set(ControlMode.PercentOutput, speed);
+      }
+      else {
+        turret.set(ControlMode.PercentOutput, 0);
+      }
+    }
   }
 
   // Tell the talon it is at a certain angle
@@ -83,7 +107,7 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Turret Angle (Degrees)", getAngle().getDegrees());
-    SmartDashboard.putBoolean("Turret Fwd Limit", getForwardLimitSwitch());
-    SmartDashboard.putBoolean("Turret Rev Limit", getReverseLimitSwitch());
+    SmartDashboard.putBoolean("Turret Fwd Soft Limit", getForwardLimitSwitch());
+    SmartDashboard.putBoolean("Turret Rev Soft Limit", getReverseLimitSwitch());
   }
 }
