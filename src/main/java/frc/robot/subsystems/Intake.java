@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,6 +19,9 @@ public class Intake extends SubsystemBase {
   public Intake() {
     intake = new TalonSRX(Constants.INTAKE_ADDRESS);
     arm = new TalonSRX(Constants.ARM_ADDRESS);
+
+    arm.setNeutralMode(NeutralMode.Brake);
+    arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
   public void intakeIn() {
@@ -29,6 +34,18 @@ public class Intake extends SubsystemBase {
 
   public void intakeOff() {
     intake.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void setArmUp() {
+    arm.set(ControlMode.Position, Constants.kArmUpPosition);
+  }
+
+  public void setArmDown() {
+    arm.set(ControlMode.Position, Constants.kArmDownPosition);
+  }
+
+  public void setArmOff() {
+    arm.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
