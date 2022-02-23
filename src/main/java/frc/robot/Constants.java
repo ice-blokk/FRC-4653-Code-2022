@@ -19,6 +19,14 @@ public final class Constants {
     public static final double kArmUpPosition = 99,
                                kArmDownPosition = 99;
 
+    public static final int LEAD_SHOOTER_ADDRESS = 99,
+                            FOLLOWER_SHOOTER_ADDRESS = 99,
+                            HOOD_ADJUSTER_ADDRESS = 99;
+
+    public static final double kShooterP = 0.0005,
+                               kShooterF = 0.0002148,
+                               kShooterI = 0.00001; 
+
     // Turret constants
     public static final int TURRET_ADDRESS = 99, // talon
                             TURRET_FWD_HALL_EFFECT = 99,
