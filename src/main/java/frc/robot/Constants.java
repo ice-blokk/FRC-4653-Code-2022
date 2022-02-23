@@ -19,6 +19,7 @@ public final class Constants {
     public static final double kArmUpPosition = 99,
                                kArmDownPosition = 99;
 
+    //Shooter Constants
     public static final int LEAD_SHOOTER_ADDRESS = 99,
                             FOLLOWER_SHOOTER_ADDRESS = 99,
                             HOOD_ADJUSTER_ADDRESS = 99;
@@ -26,6 +27,12 @@ public final class Constants {
     public static final double kShooterP = 0.0005,
                                kShooterF = 0.0002148,
                                kShooterI = 0.00001; 
+
+    public static final double kLimelightHeight = 1,
+                               kLimelightTarget = 1,
+                               kLimelightAngle = 999;
+
+                                
 
     // Turret constants
     public static final int TURRET_ADDRESS = 99, // talon
@@ -55,7 +62,6 @@ public final class Constants {
 
     
 
-    public static final double kLimelightAngle = 999; // from the horizontal direction
 
     // Odometry + Trajectory Constants
 

@@ -8,7 +8,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DefaultShoot extends CommandBase {
   /** Creates a new DefaultShoot. */
-  public DefaultShoot() {
+  
+  private LimeLight limelight;
+  private BooleanSupplier shoot;
+  private Shooter shooter;
+  private double distance;
+
+  public DefaultShoot(Limelight limelight, BooleanSupplier shoot, Shooter shooter) {
+    this.limelight = limelight;
+    this.shoot = shoot;
+    this.shooter = shooter;
+    
+    addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -18,7 +29,12 @@ public class DefaultShoot extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    distance = (Constants.kLimelightTarget - Constants.kLimelightHeight) / (Math.tan(limelight.getY() + Constants.kLimelightAngle));
+
+    
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
