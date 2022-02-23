@@ -5,9 +5,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
 
@@ -27,7 +31,7 @@ public class Shooter extends SubsystemBase {
 
     leadShooter.getPIDController().setP(Constants.kShooterP); //make in constants
     leadShooter.getPIDController().setI(Constants.kShooterI);
-    leadShooter.getPIDController().setF(Constants.kShooterF);
+    leadShooter.getPIDController().setFF(Constants.kShooterF);
     leadShooter.getPIDController().setOutputRange(-1, 1);
 
   }
