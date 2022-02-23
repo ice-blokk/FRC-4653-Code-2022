@@ -4,15 +4,19 @@
 
 package frc.robot.commands.defaultcommands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Shooter;
+import frc.robot.util.Limelight;
 
 public class DefaultShoot extends CommandBase {
-  /** Creates a new DefaultShoot. */
   
-  private LimeLight limelight;
+  private Limelight limelight;
   private BooleanSupplier shoot;
   private Shooter shooter;
-  private double distance;
+  private double distanceToTarget, angleToGoal;
 
   public DefaultShoot(Limelight limelight, BooleanSupplier shoot, Shooter shooter) {
     this.limelight = limelight;
@@ -20,27 +24,26 @@ public class DefaultShoot extends CommandBase {
     this.shooter = shooter;
     
     addRequirements(shooter);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    distance = (Constants.kLimelightTarget - Constants.kLimelightHeight) / (Math.tan(limelight.getY() + Constants.kLimelightAngle));
 
-    
+    angleToGoal = (Constants.kLimelightAngle + limelight.getY()) * (Math.PI / 180);
+
+    distanceToTarget = (Constants.kTargetAngle - Constants.kLimelightHeight) / Math.tan(angleToGoal);
 
   }
 
-  // Called once the command ends or is interrupted.
+
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
+
   @Override
   public boolean isFinished() {
     return false;
