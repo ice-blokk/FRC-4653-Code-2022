@@ -18,9 +18,9 @@ public class DefaultShoot extends CommandBase {
   private Shooter shooter;
   private double distanceToTarget, angleToGoal;
 
-  public DefaultShoot(Limelight limelight, BooleanSupplier shoot, Shooter shooter) {
-    this.limelight = limelight;
+  public DefaultShoot(BooleanSupplier shoot, Limelight limelight, Shooter shooter) {
     this.shoot = shoot;
+    this.limelight = limelight;
     this.shooter = shooter;
     
     addRequirements(shooter);
@@ -33,9 +33,9 @@ public class DefaultShoot extends CommandBase {
   @Override
   public void execute() {
 
-    angleToGoal = (Constants.kLimelightAngle + limelight.getY()) * (Math.PI / 180);
+    angleToGoal = (Constants.kLimelightAngle + limelight.getY()) * (Math.PI / 180); // in radians
 
-    distanceToTarget = (Constants.kTargetAngle - Constants.kLimelightHeight) / Math.tan(angleToGoal);
+    distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
 
   }
 
