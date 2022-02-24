@@ -28,9 +28,9 @@ public final class Constants {
                                kShooterF = 0.0002148,
                                kShooterI = 0.00001; 
 
-    public static final double kLimelightHeight = 1, // in inches
-                               kTargetAngle = 1, // degrees 
-                               kLimelightAngle = 999; // degrees
+    public static final double kLimelightHeight = 1, // inches
+                               kTargetHeight = 1, // inches
+                               kLimelightAngle = 999; // degrees, based from the horizontal
 
                                 
 
