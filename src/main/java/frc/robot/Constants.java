@@ -14,10 +14,12 @@ public final class Constants {
 
     // Intake constants
     public static final int INTAKE_ADDRESS = 99, // talon
-                            ARM_ADDRESS = 99; // talon
+                            ARM_ADDRESS = 99, // talon
+                            INTAKE_OUT_HALLEFFECT_ADDRESS = 99, // hall effect sensor
+                            INTAKE_IN_HALLEFFECT_ADDRESS = 99; // hall effect sensor
 
-    public static final double kArmUpPosition = 99,
-                               kArmDownPosition = 99;
+    public static final double kIntakeArmOutSoftLimit = 999,
+                               kIntakeArmInSoftLimit = 999;
 
     //Shooter Constants
     public static final int LEAD_SHOOTER_ADDRESS = 99,
@@ -70,7 +72,6 @@ public final class Constants {
     public static final double ksVolts = 0.268;
     public static final double kvVoltSecondsPerMeter = 1.89;
     public static final double kaVoltSecondsSquaredPerMeter = .0243; // this is the value from team 5190
-
 
     // P val gotten from characterization
     public static final double kPDriveVel = 0.205;
