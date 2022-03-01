@@ -12,15 +12,24 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.defaultcommands.DefaultArcadeDrive;
 import frc.robot.commands.defaultcommands.DefaultFeedTransport;
 import frc.robot.commands.defaultcommands.DefaultIntake;
+import frc.robot.commands.defaultcommands.DefaultRotateTurret;
+import frc.robot.commands.defaultcommands.DefaultShoot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transport;
+import frc.robot.subsystems.Turret;
+import frc.robot.util.Limelight;
 
 public class RobotContainer {
 
   private Drivetrain drivetrain;
   private Transport transport;
   private Intake intake;
+  private Shooter shooter;
+  private Turret turret;
+
+  private Limelight limelight;
   
   private Joystick stick;
   private XboxController xbox;
@@ -32,6 +41,10 @@ public class RobotContainer {
     drivetrain = new Drivetrain();
     transport = new Transport();
     intake = new Intake();
+    shooter = new Shooter();
+    turret = new Turret();
+
+    limelight = new Limelight();
 
     stick = new Joystick(0);
     xbox = new XboxController(1);
@@ -58,6 +71,11 @@ public class RobotContainer {
                                                () -> xbox.getYButton(), // arm up
                                                () -> xbox.getAButton(), // arm down
                                                intake));
+    shooter.setDefaultCommand(new DefaultShoot(() -> xbox.getRightBumper(), // shoot
+                                              limelight, shooter));
+    turret.setDefaultCommand(new DefaultRotateTurret(() -> xbox.getRightX(), // rotate using the right stick
+                                                     () -> xbox.getLeftBumper(), // automatically aim using left bumper   
+                                                     limelight, turret));
   }
 
   private void configureButtonBindings() {}
