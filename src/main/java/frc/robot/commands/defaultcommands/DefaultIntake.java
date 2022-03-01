@@ -43,14 +43,14 @@ public class DefaultIntake extends CommandBase {
     }
 
     if(armUp.getAsBoolean()) {
-      intake.setArmUp();
+      intake.armOut();
     }
     else if(armDown.getAsBoolean()) {
-      intake.setArmDown();
+      intake.armIn();
     }
-    // else {
-    //   intake.setArmOff();
-    // }
+    else {
+      intake.armOff();
+    }
   }
 
   
