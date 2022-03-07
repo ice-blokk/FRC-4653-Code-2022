@@ -13,7 +13,7 @@ public class DefaultIntake extends CommandBase {
   
   private Intake intake;
 
-  private BooleanSupplier in, out, armUp, armDown;
+      BooleanSupplier in, out, armUp, armDown;
 
   public DefaultIntake(BooleanSupplier in, BooleanSupplier out, BooleanSupplier armUp, BooleanSupplier armDown, Intake intake) {
     this.intake = intake;
