@@ -37,7 +37,7 @@ public class DefaultFeedTransport extends CommandBase {
     else if(down.getAsBoolean()) {
       transport.setFeeder(1);
     }
-    else {
+    else if(!up.getAsBoolean() && !down.getAsBoolean()) {
 
       if(transport.getBeamBreak()) {
         transport.resetEncoderDelta();
@@ -50,8 +50,14 @@ public class DefaultFeedTransport extends CommandBase {
           transport.resetEncoderDelta();
           sensorWasTriggered = false;
         }
-      
+      else {
+        transport.setFeeder(0);
       }
+
+      }
+    else {
+      transport.setFeeder(0);
+    }
     } // end of main if statement
   } // end of execute()
 
