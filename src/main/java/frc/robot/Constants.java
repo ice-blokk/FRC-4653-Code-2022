@@ -9,37 +9,35 @@ public final class Constants {
     // Drive motor ports (all sparks)
     public static final int DRIVE_FRONT_LEFT_ADDRESS = 1,
                             DRIVE_FRONT_RIGHT_ADDRESS = 2,
-                            DRIVE_BACK_LEFT_ADDRESS = 3,
-                            DRIVE_BACK_RIGHT_ADDRESS = 4;
+                            DRIVE_BACK_LEFT_ADDRESS = 13, 
+                            DRIVE_BACK_RIGHT_ADDRESS = 14;
 
     // Intake constants
-    public static final int INTAKE_ADDRESS = 99, // talon
-                            ARM_ADDRESS = 99, // talon
-                            INTAKE_OUT_HALLEFFECT_ADDRESS = 99, // hall effect sensor
-                            INTAKE_IN_HALLEFFECT_ADDRESS = 99; // hall effect sensor
+    public static final int INTAKE_ADDRESS = 11, // talon
+                            ARM_ADDRESS = 7; // spark
 
-    public static final double kIntakeArmOutSoftLimit = 999,
-                               kIntakeArmInSoftLimit = 999;
+    public static final double kIntakeArmOutSoftLimit = 99999,
+                               kIntakeArmInSoftLimit = 99999;
 
     //Shooter Constants
-    public static final int LEAD_SHOOTER_ADDRESS = 99,
-                            FOLLOWER_SHOOTER_ADDRESS = 99,
-                            HOOD_ADJUSTER_ADDRESS = 99;
+    public static final int LEAD_SHOOTER_ADDRESS = 5, // spark, facing the front, the motor on the left
+                            FOLLOWER_SHOOTER_ADDRESS = 6, // spark, facing the front, motor is on the right
+                            HOOD_ADJUSTER_ADDRESS = 9; // rev servo
 
     public static final double kShooterP = 0.0005,
                                kShooterF = 0.0002148,
                                kShooterI = 0.00001; 
 
-    public static final double kLimelightHeight = 1, // inches
-                               kTargetHeight = 1, // inches
-                               kLimelightAngle = 999; // degrees, based from the horizontal
+    public static final double kLimelightHeight = 50, // inches (total is 4ft 2 in)
+                               kTargetHeight = 104, // inches (total is 8 ft 8 in)
+                               kLimelightAngle = 35; // degrees, based from the horizontal
 
                                 
 
     // Turret constants
-    public static final int TURRET_ADDRESS = 99, // talon
-                            TURRET_FWD_HALL_EFFECT = 99,
-                            TURRET_REV_HALL_EFFECT = 99,
+    public static final int TURRET_ADDRESS = 3, // talon
+                            TURRET_FWD_LIMIT_SWITCH = 1, // DIO
+                            TURRET_REV_LIMIT_SWITCH = 2, // DIO
 
                             kTurretSlotIdx = 0,
                             kTurretPIDLoopIdx = 0;
@@ -49,8 +47,8 @@ public final class Constants {
                                 kTurretD = 99,
                                 kTurretF = 99,
 
-                                kSoftMaxTurretAngle = 99,
-                                kSoftMinTurretAngle = 99,
+                                kSoftMaxTurretAngle = 9999,
+                                kSoftMinTurretAngle = 9999,
 
                                 kTurretSpurGearRatio = 149.0 / 10.0, // ratio of gear attached to turret to gear on motor
                                 kTurretMotorGearRatio = 45.0 / 1.0, // ratio of motor with gearbox
@@ -59,8 +57,8 @@ public final class Constants {
                                 // i have no idea of the above calculation is at all correct
 
     // Transport constants
-    public static final int TRANSPORT_ADDRESS = 99,
-                            TRANSPORT_BEAM_BREAK_ADDRESS = 99;
+    public static final int TRANSPORT_ADDRESS = 4, // talon
+                            TRANSPORT_BEAM_BREAK_ADDRESS = 0; // DIO
 
     
 
