@@ -6,6 +6,7 @@ package frc.robot.commands.defaultcommands;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
@@ -36,6 +37,16 @@ public class DefaultShoot extends CommandBase {
     angleToGoal = (Constants.kLimelightAngle + limelight.getY()) * (Math.PI / 180); // in radians
 
     distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
+
+    if(shoot.getAsBoolean()) {
+      shooter.setShooterOpenLoop(.9);
+    }
+    else {
+      shooter.setShooterOpenLoop(0);
+    }
+
+    shooter.setHoodAngle(.5);
+    SmartDashboard.putNumber("Hood", shooter.getHoodAngle());
 
   }
 
