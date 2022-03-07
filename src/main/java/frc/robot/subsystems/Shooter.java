@@ -37,11 +37,19 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setHoodAngle(double degrees){
-    hoodMover.setAngle(degrees);
+    hoodMover.set(degrees);
+  }
+
+  public double getHoodAngle() {
+    return hoodMover.getAngle();
   }
 
   public void setShooterRPM(double rpm){
     leadShooter.getPIDController().setReference(rpm, ControlType.kVelocity);
+  }
+
+  public void setShooterOpenLoop(double power) {
+    leadShooter.set(power);
   }
 
 
