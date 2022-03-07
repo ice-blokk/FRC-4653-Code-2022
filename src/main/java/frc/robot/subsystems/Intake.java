@@ -6,8 +6,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxLimitSwitch;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,46 +21,41 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
 
-  private final TalonSRX intake, arm;
-  private final DigitalInput outHallEffect, inHallEffect;
+  private final TalonSRX intake;
+  private final CANSparkMax arm;
 
   public Intake() {
     intake = new TalonSRX(Constants.INTAKE_ADDRESS);
-    arm = new TalonSRX(Constants.ARM_ADDRESS);
+    arm = new CANSparkMax(Constants.ARM_ADDRESS, MotorType.kBrushless);
 
-    outHallEffect = new DigitalInput(Constants.INTAKE_OUT_HALLEFFECT_ADDRESS);
-    inHallEffect = new DigitalInput(Constants.INTAKE_IN_HALLEFFECT_ADDRESS);
+    intake.setNeutralMode(NeutralMode.Brake);
 
-    arm.setNeutralMode(NeutralMode.Brake);
-    arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    arm.setIdleMode(IdleMode.kBrake);
 
-    // config soft limits with encoders
-    arm.configForwardSoftLimitThreshold(Constants.kSoftMaxTurretAngle / (360.0 * Constants.kTurretRotationsPerTick));
-    arm.configReverseSoftLimitThreshold(Constants.kSoftMinTurretAngle / (360.0 * Constants.kTurretRotationsPerTick));
-
-    // enable soft limits
-    arm.configForwardSoftLimitEnable(true);
-    arm.configReverseSoftLimitEnable(true);
+    arm.setSoftLimit(SoftLimitDirection.kForward, (float)Constants.kIntakeArmOutSoftLimit);
+    arm.setSoftLimit(SoftLimitDirection.kReverse, (float)Constants.kIntakeArmInSoftLimit);
   }
 
+  // Check if motor is at its forward soft limit
   public boolean isArmOut() {
-    return outHallEffect.get();
+    return arm.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
   }
 
+  // Check if motor is at its reverse soft limit
   public boolean isArmIn() {
-    return inHallEffect.get();
+    return arm.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
   }
 
   public void intakeIn() {
-    if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, -.7);
-    }
+    //if(isArmOut()) { // if arm isn't fully out, the chain will break
+      intake.set(ControlMode.PercentOutput, .6);
+    //}
   }
 
   public void intakeOut() {
-    if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, .7);
-    }
+    //if(isArmOut()) { // if arm isn't fully out, the chain will break
+      intake.set(ControlMode.PercentOutput, -.6);
+    //}
   }
 
   public void intakeOff() {
@@ -63,18 +64,18 @@ public class Intake extends SubsystemBase {
 
   public void armOut() {
     if(!isArmOut()) {
-      arm.set(ControlMode.PercentOutput, -.5);
+      arm.set(-1);
     }
   }
 
   public void armIn() {
     if(!isArmIn()) {
-      arm.set(ControlMode.PercentOutput, .5);
+      arm.set(1);
     }
   }
 
   public void armOff() {
-    arm.set(ControlMode.PercentOutput, 0);
+    arm.set(0);
   }
 
   @Override
