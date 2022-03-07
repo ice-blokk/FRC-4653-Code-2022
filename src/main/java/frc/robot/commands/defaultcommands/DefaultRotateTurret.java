@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
 import frc.robot.util.Limelight;
@@ -43,11 +44,11 @@ public class DefaultRotateTurret extends CommandBase {
 
   @Override
   public void execute() {
-    
-    if(Math.abs(rotate.getAsDouble()) > 0) {
-      turret.setOpenLoop(rotate.getAsDouble() * -1);
-    }
-    else if(target.getAsBoolean()) {
+    //SmartDashboard.putNumber("stick", rotate.getAsDouble());
+    //if(Math.abs(rotate.getAsDouble()) > 0) {
+      turret.setOpenLoop(rotate.getAsDouble() * -.5);
+    //}
+     if(target.getAsBoolean()) {
       
       turretTargetPower = pid.calculate(limelight.getX());
       
