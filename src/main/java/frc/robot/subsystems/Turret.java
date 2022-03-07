@@ -21,14 +21,14 @@ import frc.robot.Constants;
 public class Turret extends SubsystemBase {
 
   private TalonSRX turret;
-  private DigitalInput fwdHallEffect, revHallEffect; // hall effects for limit switches
+  private DigitalInput fwdSwitch, revSwitch; // hall effects for limit switches
   //  (idk if i'm gonna use this with soft limits or just the hall effects or at all)
 
   public Turret() {
     turret = new TalonSRX(Constants.TURRET_ADDRESS);
 
-    fwdHallEffect = new DigitalInput(Constants.TURRET_FWD_HALL_EFFECT);
-    revHallEffect = new DigitalInput(Constants.TURRET_REV_HALL_EFFECT);
+    fwdSwitch = new DigitalInput(Constants.TURRET_FWD_LIMIT_SWITCH);
+    revSwitch = new DigitalInput(Constants.TURRET_REV_LIMIT_SWITCH);
 
     turret.configFactoryDefault();
 
@@ -59,18 +59,18 @@ public class Turret extends SubsystemBase {
     turret.set(ControlMode.Position, angle.getRadians() / (2 * Math.PI * Constants.kTurretRotationsPerTick));
   }
 
-  public boolean getFwdHallEffect() {
-    return fwdHallEffect.get();
+  public boolean getFwdSwitch() {
+    return fwdSwitch.get();
   }
 
-  public boolean getRevHallEffect() {
-    return revHallEffect.get();
+  public boolean getRevSwitch() {
+    return revSwitch.get();
   }
 
   // Manually move the turret (in percent mode)
   public void setOpenLoop(double speed) {
     if(speed > 0) {
-      if(!getFwdHallEffect()) {
+      if(!getFwdSwitch()) {
         turret.set(ControlMode.PercentOutput, speed);
       }
       else {
@@ -78,7 +78,7 @@ public class Turret extends SubsystemBase {
       }
     }
     else if(speed < 0){
-      if(!getRevHallEffect()) {
+      if(!getRevSwitch()) {
         turret.set(ControlMode.PercentOutput, speed);
       }
       else {
@@ -97,18 +97,20 @@ public class Turret extends SubsystemBase {
     return Rotation2d.fromDegrees(Math.toDegrees(Constants.kTurretRotationsPerTick * turret.getSelectedSensorPosition() * 2 * Math.PI));
   }
 
-  public boolean getForwardLimitSwitch() {
+  public boolean getForwardSoftLimitSwitch() {
     return turret.isFwdLimitSwitchClosed() == 1;
   }
 
-  public boolean getReverseLimitSwitch() {
+  public boolean getReverseSoftLimitSwitch() {
     return turret.isRevLimitSwitchClosed() == 1;
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Turret Angle (Degrees)", getAngle().getDegrees());
-    SmartDashboard.putBoolean("Turret Fwd Soft Limit", getForwardLimitSwitch());
-    SmartDashboard.putBoolean("Turret Rev Soft Limit", getReverseLimitSwitch());
+    SmartDashboard.putBoolean("Turret Fwd Soft Limit", getForwardSoftLimitSwitch());
+    SmartDashboard.putBoolean("Turret Rev Soft Limit", getReverseSoftLimitSwitch());
+    SmartDashboard.putBoolean("Turret Fwd Limit Switch", getFwdSwitch());
+    SmartDashboard.putBoolean("Turret Rev Limit Switch", getRevSwitch());
   }
 }
