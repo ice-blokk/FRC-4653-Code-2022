@@ -37,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
 
   private int invert = 1;
 
-  private final AHRS ahrs;
+  private final AHRS ahrs; // TODO: configure gyro axes https://pdocs.kauailabs.com/navx-mxp/installation/omnimount/
 
   // Odometry & trajectory
   private final DifferentialDriveOdometry odometry;
@@ -76,6 +76,7 @@ public class Drivetrain extends SubsystemBase {
 
     left = new MotorControllerGroup(frontLeft, backLeft);
     right = new MotorControllerGroup(frontRight, backRight);
+	left.setInverted(true);
 
     drive = new DifferentialDrive(left, right);
 
@@ -88,7 +89,7 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  public void tankDrive(double leftSpeed, double rightSpeed, boolean sqareInputs) {
+  	public void tankDrive(double leftSpeed, double rightSpeed, boolean sqareInputs) {
 		drive.tankDrive(leftSpeed, rightSpeed, sqareInputs);
 	}
 
@@ -101,7 +102,7 @@ public class Drivetrain extends SubsystemBase {
 	}
 	public void arcadeDrive(double speed, double rotate, boolean isInverted) {
 		if(isInverted) {invert *= -1;}
-		drive.arcadeDrive(speed * invert, rotate);
+		drive.arcadeDrive(speed * invert, rotate * -1);
 	}
 
   // Gyro methods
