@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -32,29 +33,33 @@ public class Intake extends SubsystemBase {
 
     arm.setIdleMode(IdleMode.kBrake);
 
-    arm.setSoftLimit(SoftLimitDirection.kForward, (float)Constants.kIntakeArmOutSoftLimit);
-    arm.setSoftLimit(SoftLimitDirection.kReverse, (float)Constants.kIntakeArmInSoftLimit);
+    arm.setSoftLimit(SoftLimitDirection.kReverse, (float)Constants.kIntakeArmOutSoftLimit);
+    arm.setSoftLimit(SoftLimitDirection.kForward, (float)Constants.kIntakeArmInSoftLimit);
   }
 
   // Check if motor is at its forward soft limit
   public boolean isArmOut() {
-    return arm.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
+    //return arm.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
+    //return arm.getEncoder().getPosition() < -450;
+    return false;
   }
 
   // Check if motor is at its reverse soft limit
   public boolean isArmIn() {
-    return arm.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
+    //return arm.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
+    //return arm.getEncoder().getPosition() > -244;
+    return false;
   }
 
   public void intakeIn() {
     //if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, .6);
+      intake.set(ControlMode.PercentOutput, .8);
     //}
   }
 
   public void intakeOut() {
     //if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, -.6);
+      intake.set(ControlMode.PercentOutput, -.8);
     //}
   }
 
@@ -80,6 +85,8 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Intake Arm Encoder", arm.getEncoder().getPosition());
+    SmartDashboard.putBoolean("Intake Arm Out Soft Limit", isArmOut());
+    SmartDashboard.putBoolean("INtake Arm In Soft Limit", isArmIn());
   }
 }

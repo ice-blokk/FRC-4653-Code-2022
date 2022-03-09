@@ -33,20 +33,34 @@ public class DefaultIntake extends CommandBase {
   @Override
   public void execute() {
     if(in.getAsBoolean()) {
+      //if(intake.isArmOut()) {
       intake.intakeIn();
+      //}
     }
     else if (out.getAsBoolean()) {
-      intake.intakeOut();
+      //if(intake.isArmOut()) {
+        intake.intakeOut();
+      //}
     }
     else {
       intake.intakeOff();
     }
 
     if(armUp.getAsBoolean()) {
-      intake.armOut();
+      if(!intake.isArmOut()) {
+        intake.armOut();
+      } 
+      else {
+        intake.armOff();
+      }
     }
     else if(armDown.getAsBoolean()) {
-      intake.armIn();
+      if(!intake.isArmIn()) {
+        intake.armIn();
+      }
+      else {
+        intake.armOff();
+      }
     }
     else {
       intake.armOff();

@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.defaultcommands.DefaultArcadeDrive;
+import frc.robot.commands.defaultcommands.DefaultClimb;
 import frc.robot.commands.defaultcommands.DefaultFeedTransport;
 import frc.robot.commands.defaultcommands.DefaultIntake;
 import frc.robot.commands.defaultcommands.DefaultRotateTurret;
 import frc.robot.commands.defaultcommands.DefaultShoot;
+import frc.robot.subsystems.Climbers;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -28,6 +30,7 @@ public class RobotContainer {
   private Intake intake;
   private Shooter shooter;
   private Turret turret;
+  private Climbers climber;
 
   private Limelight limelight;
   
@@ -43,6 +46,8 @@ public class RobotContainer {
     intake = new Intake();
     shooter = new Shooter();
     turret = new Turret();
+    climber = new Climbers();
+
 
     limelight = new Limelight();
 
@@ -76,6 +81,10 @@ public class RobotContainer {
     turret.setDefaultCommand(new DefaultRotateTurret(() -> xbox.getRightX(), // rotate using the right stick
                                                      () -> xbox.getLeftBumper(), // automatically aim using left bumper   
                                                      limelight, turret));
+
+    climber.setDefaultCommand(new DefaultClimb(() -> stick.getRawButton(8), //climber up
+                                               () -> stick.getRawButton(7), //climber down
+                                               climber));
   }
 
   private void configureButtonBindings() {}

@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -31,6 +32,7 @@ public class Shooter extends SubsystemBase {
 
     leadShooter.getPIDController().setP(Constants.kShooterP); //make in constants
     leadShooter.getPIDController().setI(Constants.kShooterI);
+    //leadShooter.getPIDController().setD(Constants.kShooterD);
     leadShooter.getPIDController().setFF(Constants.kShooterF);
     leadShooter.getPIDController().setOutputRange(-1, 1);
 
@@ -56,6 +58,6 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    SmartDashboard.putNumber("Lead Shooter RPM", leadShooter.getEncoder().getVelocity());
   }
 }

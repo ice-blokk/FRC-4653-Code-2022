@@ -39,7 +39,8 @@ public class DefaultShoot extends CommandBase {
     distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
 
     if(shoot.getAsBoolean()) {
-      shooter.setShooterOpenLoop(.9);
+      //shooter.setShooterOpenLoop(.9);
+      shooter.setShooterRPM(3000);
     }
     else {
       shooter.setShooterOpenLoop(0);
@@ -47,6 +48,8 @@ public class DefaultShoot extends CommandBase {
 
     shooter.setHoodAngle(.5);
     SmartDashboard.putNumber("Hood", shooter.getHoodAngle());
+    SmartDashboard.putNumber("Distance to Target", distanceToTarget);
+    SmartDashboard.putNumber("Angle to Goal", angleToGoal);
 
   }
 

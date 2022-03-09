@@ -16,17 +16,19 @@ public final class Constants {
     public static final int INTAKE_ADDRESS = 11, // talon
                             ARM_ADDRESS = 7; // spark
 
-    public static final double kIntakeArmOutSoftLimit = 99999,
-                               kIntakeArmInSoftLimit = 99999;
+    public static final double kIntakeArmOutSoftLimit = -16000,
+                               kIntakeArmInSoftLimit = 10;
 
     //Shooter Constants
     public static final int LEAD_SHOOTER_ADDRESS = 5, // spark, facing the front, the motor on the left
                             FOLLOWER_SHOOTER_ADDRESS = 6, // spark, facing the front, motor is on the right
                             HOOD_ADJUSTER_ADDRESS = 9; // rev servo
 
-    public static final double kShooterP = 0.0005,
-                               kShooterF = 0.0002148,
-                               kShooterI = 0.00001; 
+    public static final double kShooterP = 0.00008,
+                               kShooterI = 0.0000001,
+                               //kShooterD = 0.001,
+                               kShooterF = 0.000175; // 148;
+                               
 
     public static final double kLimelightHeight = 50, // inches (total is 4ft 2 in)
                                kTargetHeight = 104, // inches (total is 8 ft 8 in)
@@ -35,7 +37,7 @@ public final class Constants {
                                 
 
     // Turret constants
-    public static final int TURRET_ADDRESS = 3, // talon
+    public static final int TURRET_ADDRESS = 9, // talon
                             TURRET_FWD_LIMIT_SWITCH = 1, // DIO
                             TURRET_REV_LIMIT_SWITCH = 2, // DIO
 
@@ -52,15 +54,29 @@ public final class Constants {
 
                                 kTurretSpurGearRatio = 149.0 / 10.0, // ratio of gear attached to turret to gear on motor
                                 kTurretMotorGearRatio = 45.0 / 1.0, // ratio of motor with gearbox
-                                kVersaPlanetaryEncoderCountsPerRevolution = 1024, // CPS of encoder on motor
-                                kTurretRotationsPerTick = (1.0 / kVersaPlanetaryEncoderCountsPerRevolution) * (1.0 / kTurretMotorGearRatio) / (1.0 / kTurretSpurGearRatio); 
+                                kVersaPlanetaryEncoderCountsPerRevolution = 1024, // CPR of encoder on motor
+                                kTurretRotationsPerTick = .00001965;
+                                //kTurretRotationsPerTick = (1.0 / kVersaPlanetaryEncoderCountsPerRevolution) * (1.0 / kTurretMotorGearRatio) / (1.0 / kTurretSpurGearRatio); 
                                 // i have no idea of the above calculation is at all correct
 
     // Transport constants
-    public static final int TRANSPORT_ADDRESS = 4, // talon
+    public static final int TRANSPORT_ADDRESS = 10, // talon
                             TRANSPORT_BEAM_BREAK_ADDRESS = 0; // DIO
 
-    
+    // Climber constants
+    public static final int CLIMBER_LEADER_ADDRESS = 99,
+                            CLIMBER_FOLLOWER_ADDRESS = 99;
+
+    //Climber PID/FF Values
+    public static final double leadClimberP = 0.00001,
+                               leadClimberI = 0.00001,
+                               leadClimberD = 0.00001,
+                               leadClimberF = 0.00001,
+
+                               followerClimberP = 0.00001,
+                               followerClimberI = 0.00001,
+                               followerClimberD = 0.00001,
+                               followerClimberF = 0.00001;
 
 
     // Odometry + Trajectory Constants

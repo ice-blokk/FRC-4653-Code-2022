@@ -21,7 +21,7 @@ import frc.robot.Constants;
 public class Turret extends SubsystemBase {
 
   private TalonSRX turret;
-  private DigitalInput fwdSwitch, revSwitch; // hall effects for limit switches
+  private DigitalInput fwdSwitch, revSwitch; // limit switches
   //  (idk if i'm gonna use this with soft limits or just the hall effects or at all)
 
   public Turret() {
@@ -40,12 +40,12 @@ public class Turret extends SubsystemBase {
     turret.setNeutralMode(NeutralMode.Brake);
     
     // config soft limits with encoders
-    turret.configForwardSoftLimitThreshold(Constants.kSoftMaxTurretAngle / (360.0 * Constants.kTurretRotationsPerTick));
-    turret.configReverseSoftLimitThreshold(Constants.kSoftMinTurretAngle / (360.0 * Constants.kTurretRotationsPerTick));
+    //turret.configForwardSoftLimitThreshold(Constants.kSoftMaxTurretAngle / (360.0 * Constants.kTurretRotationsPerTick));
+    //turret.configReverseSoftLimitThreshold(Constants.kSoftMinTurretAngle / (360.0 * Constants.kTurretRotationsPerTick));
 
     // enable soft limits
-    turret.configForwardSoftLimitEnable(true);
-    turret.configReverseSoftLimitEnable(true);
+    //turret.configForwardSoftLimitEnable(true);
+    //turret.configReverseSoftLimitEnable(true);
 
     // config PID and feedforward
     turret.config_kP(Constants.kTurretPIDLoopIdx, Constants.kTurretP);
