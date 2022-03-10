@@ -9,8 +9,8 @@ public final class Constants {
     // Drive motor ports (all sparks)
     public static final int DRIVE_FRONT_LEFT_ADDRESS = 1,
                             DRIVE_FRONT_RIGHT_ADDRESS = 2,
-                            DRIVE_BACK_LEFT_ADDRESS = 13, 
-                            DRIVE_BACK_RIGHT_ADDRESS = 14;
+                            DRIVE_BACK_LEFT_ADDRESS = 3, 
+                            DRIVE_BACK_RIGHT_ADDRESS = 4;
 
     // Intake constants
     public static final int INTAKE_ADDRESS = 11, // talon
@@ -64,16 +64,16 @@ public final class Constants {
                             TRANSPORT_BEAM_BREAK_ADDRESS = 0; // DIO
 
     // Climber constants
-    public static final int CLIMBER_LEADER_ADDRESS = 99,
-                            CLIMBER_FOLLOWER_ADDRESS = 99;
+    public static final int CLIMBER_LEADER_ADDRESS = 15,
+                            CLIMBER_FOLLOWER_ADDRESS = 14;
 
     //Climber PID/FF Values
-    public static final double leadClimberP = 0.00001,
+    public static final double leadClimberP = 0.1,
                                leadClimberI = 0.00001,
                                leadClimberD = 0.00001,
                                leadClimberF = 0.00001,
 
-                               followerClimberP = 0.00001,
+                               followerClimberP = 0.1,
                                followerClimberI = 0.00001,
                                followerClimberD = 0.00001,
                                followerClimberF = 0.00001;
