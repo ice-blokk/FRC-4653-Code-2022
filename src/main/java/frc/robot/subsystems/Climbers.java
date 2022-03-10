@@ -29,31 +29,35 @@ public class Climbers extends SubsystemBase {
     followerClimber.setIdleMode(IdleMode.kBrake);
 
     leadClimber.getPIDController().setP(Constants.leadClimberP);
-    leadClimber.getPIDController().setI(Constants.leadClimberI);
-    leadClimber.getPIDController().setD(Constants.leadClimberD);
-    leadClimber.getPIDController().setFF(Constants.leadClimberF);
+    //leadClimber.getPIDController().setI(Constants.leadClimberI);
+    //leadClimber.getPIDController().setD(Constants.leadClimberD);
+    //leadClimber.getPIDController().setFF(Constants.leadClimberF);
 
     followerClimber.getPIDController().setP(Constants.followerClimberP);
-    followerClimber.getPIDController().setI(Constants.followerClimberI);
-    followerClimber.getPIDController().setD(Constants.followerClimberD);
-    followerClimber.getPIDController().setFF(Constants.followerClimberF);   
+    //followerClimber.getPIDController().setI(Constants.followerClimberI);
+    //followerClimber.getPIDController().setD(Constants.followerClimberD);
+    //followerClimber.getPIDController().setFF(Constants.followerClimberF);   
 
   }
 
   public boolean getLeadTopLimit(){
-    return (leadClimber.getEncoder().getPosition() < 0.1);
-  }
-
-  public boolean getLeadLowerLimit(){
+    //return false;
     return (leadClimber.getEncoder().getPosition() > 0);
   }
 
+  public boolean getLeadLowerLimit(){
+    return (leadClimber.getEncoder().getPosition() < -110);
+    //return false;
+  }
+
   public boolean getFollowerTopLimit(){
-    return (followerClimber.getEncoder().getPosition() < 0.1);
+    //return false;
+    return (followerClimber.getEncoder().getPosition() > 0);
   }
 
   public boolean getFollowerLowerLimit(){
-    return (followerClimber.getEncoder().getPosition() < 0.1);
+    //return false;
+    return (followerClimber.getEncoder().getPosition() < -110);
   }
 
   public void setLeadPosition(double position){
@@ -64,6 +68,10 @@ public class Climbers extends SubsystemBase {
   public void setFollowerPosition(double position){
     //followerClimber.getEncoder().setPosition(position);
     followerClimber.getPIDController().setReference(position, ControlType.kPosition);
+  }
+
+  public double getFollowerPosition() {
+    return followerClimber.getEncoder().getPosition();
   }
 
 
