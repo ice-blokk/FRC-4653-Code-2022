@@ -46,7 +46,7 @@ public class DefaultShoot extends CommandBase {
       shooter.setShooterOpenLoop(0);
     }
 
-    shooter.setHoodAngle(.5);
+    shooter.setHood(.5);
     SmartDashboard.putNumber("Hood", shooter.getHoodAngle());
     SmartDashboard.putNumber("Distance to Target", distanceToTarget);
     SmartDashboard.putNumber("Angle to Goal", angleToGoal);
