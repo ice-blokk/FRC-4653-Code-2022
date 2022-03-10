@@ -38,8 +38,12 @@ public class Shooter extends SubsystemBase {
 
   }
 
-  public void setHoodAngle(double degrees){
-    hoodMover.set(degrees);
+  public void setHood(double position){
+    hoodMover.set(position);
+  }
+
+  public void setHoodAngle(double degrees) {
+    hoodMover.setAngle(degrees);
   }
 
   public double getHoodAngle() {
