@@ -6,6 +6,7 @@ package frc.robot.commands.defaultcommands;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climbers;
 
@@ -27,8 +28,8 @@ public class DefaultClimb extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    position = 0;
-    increment = 0.0001;
+    position = climber.getFollowerPosition();
+    increment = 2;
 
   }
 
@@ -45,6 +46,7 @@ public class DefaultClimb extends CommandBase {
     climber.setLeadPosition(position);
     climber.setFollowerPosition(position);
 
+    SmartDashboard.putNumber("Climber Increment", position);
   }
 
   // Called once the command ends or is interrupted.
