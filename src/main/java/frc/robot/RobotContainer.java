@@ -87,7 +87,9 @@ public class RobotContainer {
                                                climber));
   }
 
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    
+  }
 
   private void initializeAutoChooser() {
     chooser.setDefaultOption("Nothing", null);
