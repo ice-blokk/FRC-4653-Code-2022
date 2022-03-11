@@ -84,7 +84,7 @@ public class RobotContainer {
                                                () -> xbox.getPOV() == 0, // hood up
                                                () -> xbox.getPOV() == 180, // hood down
                                               limelight, shooter, transport));
-    turret.setDefaultCommand(new DefaultRotateTurret(() -> xbox.getRightX(), // rotate using the right stick
+    turret.setDefaultCommand(new DefaultRotateTurret(() -> filter(xbox.getRightX()), // rotate using the right stick
                                                      () -> xbox.getLeftBumper(), // automatically aim using left bumper   
                                                      limelight, turret));
 
@@ -110,5 +110,12 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return chooser.getSelected();
+  }
+
+  public double filter(double value) {
+    if(Math.abs(value) > .05) {
+      return 0;
+    }
+    return value;
   }
 }
