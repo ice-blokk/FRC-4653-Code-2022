@@ -45,7 +45,7 @@ public class DefaultRotateTurret extends CommandBase {
   @Override
   public void execute() {
     //SmartDashboard.putNumber("stick", rotate.getAsDouble());
-    if(Math.abs(rotate.getAsDouble()) > .1) {
+    if(Math.abs(rotate.getAsDouble()) > 0) {
       turret.setOpenLoop(rotate.getAsDouble() * -1);
     }
     else if(target.getAsBoolean()) {
