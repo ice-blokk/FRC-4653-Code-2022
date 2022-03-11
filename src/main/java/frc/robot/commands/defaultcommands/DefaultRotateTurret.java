@@ -31,7 +31,7 @@ public class DefaultRotateTurret extends CommandBase {
     this.target = target;
     this.limelight = limelight;
 
-    pid = new PIDController(.0002, .00001, 0);
+    pid = new PIDController(.1, 0, 0);
     pid.setSetpoint(0);
 
     addRequirements(turret);
@@ -45,10 +45,10 @@ public class DefaultRotateTurret extends CommandBase {
   @Override
   public void execute() {
     //SmartDashboard.putNumber("stick", rotate.getAsDouble());
-    //if(Math.abs(rotate.getAsDouble()) > 0) {
-      turret.setOpenLoop(rotate.getAsDouble() * -.5);
-    //}
-     if(target.getAsBoolean()) {
+    if(Math.abs(rotate.getAsDouble()) > .1) {
+      turret.setOpenLoop(rotate.getAsDouble() * -1);
+    }
+    else if(target.getAsBoolean()) {
       
       turretTargetPower = pid.calculate(limelight.getX());
       
@@ -65,6 +65,8 @@ public class DefaultRotateTurret extends CommandBase {
     else {
       turret.setOpenLoop(0);
     }
+
+    SmartDashboard.putNumber("Turret Target Power", turretTargetPower);
   
   } // end of execute
 

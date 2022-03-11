@@ -9,14 +9,13 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class ManuallyMoveHood extends CommandBase {
+public class ManuallyMoveHoodDown extends CommandBase {
   private Shooter shooter;
-  private BooleanSupplier up, down;
-  private double position, increment;
+  private BooleanSupplier down;
+  private double angle, increment;
 
-  public ManuallyMoveHood(BooleanSupplier up, BooleanSupplier down, Shooter shooter) {
+  public ManuallyMoveHoodDown(BooleanSupplier up, BooleanSupplier down, Shooter shooter) {
     this.shooter = shooter;
-    this.up = up;
     this.down = down;
     addRequirements(shooter);
   }
@@ -24,19 +23,17 @@ public class ManuallyMoveHood extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    position = 100;
+    angle = shooter.getHoodAngle();
     increment = .1;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(up.getAsBoolean()) {
-      position += increment;
-    }
     if(down.getAsBoolean()) {
-      position -= increment;
+      angle -= increment;
     }
+    shooter.setHoodAngle(angle);
   }
 
   // Called once the command ends or is interrupted.

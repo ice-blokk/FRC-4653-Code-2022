@@ -15,6 +15,7 @@ public class DefaultArcadeDrive extends CommandBase {
   private Drivetrain drivetrain;
   private DoubleSupplier speed, rotate;
   private BooleanSupplier invert;
+  private double sign;
 
   public DefaultArcadeDrive(DoubleSupplier speed, DoubleSupplier rotate, BooleanSupplier invert, Drivetrain drivetrain) {
     this.drivetrain = drivetrain;
@@ -23,6 +24,7 @@ public class DefaultArcadeDrive extends CommandBase {
     this.speed = speed;
     this.rotate = rotate;
     this.invert = invert;
+    sign = 1;
   }
 
 
@@ -32,7 +34,13 @@ public class DefaultArcadeDrive extends CommandBase {
 
   @Override
   public void execute() {
-    drivetrain.arcadeDrive(speed.getAsDouble(), rotate.getAsDouble(), invert.getAsBoolean());
+    if(rotate.getAsDouble() > 0) {
+      sign = 1;
+    }
+    else {
+      sign = -1;
+    }
+    drivetrain.arcadeDrive(speed.getAsDouble(), rotate.getAsDouble() * rotate.getAsDouble() * sign, invert.getAsBoolean());
   }
 
 

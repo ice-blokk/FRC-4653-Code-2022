@@ -5,31 +5,42 @@
 package frc.robot.commands.defaultcommands;
 
 import java.util.function.BooleanSupplier;
-
+import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Transport;
 import frc.robot.util.Limelight;
 
 public class DefaultShoot extends CommandBase {
   
   private Limelight limelight;
-  private BooleanSupplier shoot;
+  private BooleanSupplier shoot, up, down;
   private Shooter shooter;
-  private double distanceToTarget, angleToGoal;
+  private Transport transport;
+  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle;
 
-  public DefaultShoot(BooleanSupplier shoot, Limelight limelight, Shooter shooter) {
+  public DefaultShoot(BooleanSupplier shoot, BooleanSupplier up, BooleanSupplier down, Limelight limelight, Shooter shooter, Transport transport) {
     this.shoot = shoot;
     this.limelight = limelight;
     this.shooter = shooter;
+    this.transport = transport;
+    this.up = up;
+    this.down = down;
+
+    hoodIncrement = 1;
+    manualAngle = shooter.getHoodPosition();
+    calculatedAngle = 0;
     
     addRequirements(shooter);
   }
 
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    
+  }
 
   @Override
   public void execute() {
@@ -38,18 +49,36 @@ public class DefaultShoot extends CommandBase {
 
     distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
 
+    calculatedAngle = (-2.0/3.0) * (distanceToTarget) + 156.666; 
+
     if(shoot.getAsBoolean()) {
       //shooter.setShooterOpenLoop(.9);
-      shooter.setShooterRPM(3000);
+      shooter.setShooterRPM(3400);
+      if(shooter.getShooterRPM() > 2900) {
+        transport.setFeeder(-1);
+      }
     }
     else {
       shooter.setShooterOpenLoop(0);
     }
 
-    shooter.setHood(.5);
-    SmartDashboard.putNumber("Hood", shooter.getHoodAngle());
+    if(up.getAsBoolean()) {
+      manualAngle += hoodIncrement;
+      //shooter.setHood(manualAngle);
+    }
+    else if (down.getAsBoolean()) {
+      manualAngle -= hoodIncrement;
+      //shooter.setHood(manualAngle);
+    }
+
+    shooter.setHoodAngle(manualAngle);
+
+    //shooter.setHood(.5);
+    SmartDashboard.putNumber("Hood Angle", shooter.getHoodAngle());
+    SmartDashboard.putNumber("Hood Position", shooter.getHoodPosition());
     SmartDashboard.putNumber("Distance to Target", distanceToTarget);
     SmartDashboard.putNumber("Angle to Goal", angleToGoal);
+    SmartDashboard.putNumber("Manual Angle", manualAngle);
 
   }
 

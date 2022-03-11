@@ -8,7 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.autocommands.DriveOutOfStart;
+import frc.robot.commands.autocommands.IntakeBallAndShoot;
 import frc.robot.commands.defaultcommands.DefaultArcadeDrive;
 import frc.robot.commands.defaultcommands.DefaultClimb;
 import frc.robot.commands.defaultcommands.DefaultFeedTransport;
@@ -77,22 +81,31 @@ public class RobotContainer {
                                                () -> xbox.getAButton(), // arm down
                                                intake));
     shooter.setDefaultCommand(new DefaultShoot(() -> xbox.getRightBumper(), // shoot
-                                              limelight, shooter));
+                                               () -> xbox.getPOV() == 0, // hood up
+                                               () -> xbox.getPOV() == 180, // hood down
+                                              limelight, shooter, transport));
     turret.setDefaultCommand(new DefaultRotateTurret(() -> xbox.getRightX(), // rotate using the right stick
                                                      () -> xbox.getLeftBumper(), // automatically aim using left bumper   
                                                      limelight, turret));
 
     climber.setDefaultCommand(new DefaultClimb(() -> stick.getRawButton(8), //climber up
                                                () -> stick.getRawButton(7), //climber down
+                                               () -> stick.getRawButton(12), // reset climber encoders
                                                climber));
   }
 
   private void configureButtonBindings() {
-    
+    new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
   }
 
   private void initializeAutoChooser() {
     chooser.setDefaultOption("Nothing", null);
+
+    chooser.addOption("Drive Forward", new DriveOutOfStart(drivetrain));
+
+    chooser.addOption("Drive then Intake then Shoot", new IntakeBallAndShoot(drivetrain, intake, transport, shooter, turret, limelight));
+
+    SmartDashboard.putData(chooser);
   }
 
   public Command getAutonomousCommand() {

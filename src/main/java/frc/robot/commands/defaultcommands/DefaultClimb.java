@@ -13,14 +13,15 @@ import frc.robot.subsystems.Climbers;
 public class DefaultClimb extends CommandBase {
 
   private Climbers climber;
-  private BooleanSupplier up, down;
+  private BooleanSupplier up, down, resetEncoders;
   private double position, increment;
 
   /** Creates a new DefaultClimb. */
-  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, Climbers climber) {
+  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier resetEncoders, Climbers climber) {
     this.up = up;
     this.down = down;
     this.climber = climber;
+    this.resetEncoders = resetEncoders;
     
     addRequirements(climber);
   }
@@ -41,6 +42,10 @@ public class DefaultClimb extends CommandBase {
     }
     if(down.getAsBoolean() && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
       position -= increment;
+    }
+
+    if(resetEncoders.getAsBoolean()) {
+      climber.resetEncoders();
     }
   
     climber.setLeadPosition(position);

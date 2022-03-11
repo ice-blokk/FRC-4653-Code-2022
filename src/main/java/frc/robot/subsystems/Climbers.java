@@ -42,22 +42,22 @@ public class Climbers extends SubsystemBase {
 
   public boolean getLeadTopLimit(){
     //return false;
-    return (leadClimber.getEncoder().getPosition() > 0);
+    return (leadClimber.getEncoder().getPosition() > 110);
   }
 
   public boolean getLeadLowerLimit(){
-    return (leadClimber.getEncoder().getPosition() < -110);
+    return (leadClimber.getEncoder().getPosition() < 0);
     //return false;
   }
 
   public boolean getFollowerTopLimit(){
     //return false;
-    return (followerClimber.getEncoder().getPosition() > 0);
+    return (followerClimber.getEncoder().getPosition() > 110);
   }
 
   public boolean getFollowerLowerLimit(){
     //return false;
-    return (followerClimber.getEncoder().getPosition() < -110);
+    return (followerClimber.getEncoder().getPosition() < 0);
   }
 
   public void setLeadPosition(double position){
@@ -72,6 +72,19 @@ public class Climbers extends SubsystemBase {
 
   public double getFollowerPosition() {
     return followerClimber.getEncoder().getPosition();
+  }
+
+  public void setLeadOpenLoop(double power) {
+    leadClimber.set(power);
+  }
+
+  public void setFollowerOpenLoop(double power) {
+    followerClimber.set(power);
+  }
+
+  public void resetEncoders() {
+    leadClimber.getEncoder().setPosition(0);
+    followerClimber.getEncoder().setPosition(0);
   }
 
 

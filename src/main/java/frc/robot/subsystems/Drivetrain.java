@@ -176,6 +176,10 @@ public class Drivetrain extends SubsystemBase {
 		return Units.inchesToMeters((-rightEncoder.getPosition() / 7.31) * Math.PI * 6.0);
 	}
 
+	public double getEncoderAverage() {
+		return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2 ;
+	}
+
 	// Methods for creating trajectories
 	public SimpleMotorFeedforward getFeedforward() {
 		return feedforward;
@@ -212,8 +216,12 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
 	  SmartDashboard.putBoolean("Drivetrain Inverted", invert == -1);
+
+	  SmartDashboard.putNumber("Drivetrain Angle", ahrs.getAngle());
 	  
 	  SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
 	  SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
+
+	  SmartDashboard.putNumber("Encoder Average", getEncoderAverage());
   }
 }
