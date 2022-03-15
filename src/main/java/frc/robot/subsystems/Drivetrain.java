@@ -215,13 +215,17 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-	  SmartDashboard.putBoolean("Drivetrain Inverted", invert == -1);
 
-	  SmartDashboard.putNumber("Drivetrain Angle", ahrs.getAngle());
-	  
-	  SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
-	  SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
+	odometry.update(getHeading(), getLeftEncoderDistance() , getRightEncoderDistance());
 
-	  SmartDashboard.putNumber("Encoder Average", getEncoderAverage());
+	SmartDashboard.putBoolean("Drivetrain Inverted", invert == -1);
+
+	SmartDashboard.putNumber("Drivetrain Angle", ahrs.getAngle());
+	
+	SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
+	SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
+	SmartDashboard.putNumber("Odometry Rotation (degrees)", odometry.getPoseMeters().getRotation().getDegrees());
+
+	SmartDashboard.putNumber("Encoder Average", getEncoderAverage());
   }
 }
