@@ -40,7 +40,7 @@ public class DefaultArcadeDrive extends CommandBase {
     else {
       sign = -1;
     }
-    drivetrain.arcadeDrive(speed.getAsDouble(), rotate.getAsDouble() * rotate.getAsDouble() * sign, invert.getAsBoolean());
+    drivetrain.arcadeDrive(speed.getAsDouble(), rotate.getAsDouble() * rotate.getAsDouble() * sign * .55, invert.getAsBoolean());
   }
 
 

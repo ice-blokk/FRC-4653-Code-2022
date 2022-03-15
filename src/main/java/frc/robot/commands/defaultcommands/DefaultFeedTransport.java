@@ -64,6 +64,7 @@ public class DefaultFeedTransport extends CommandBase {
   
   @Override
   public void end(boolean interrupted) {
+    transport.setFeeder(0);
   }
 
   

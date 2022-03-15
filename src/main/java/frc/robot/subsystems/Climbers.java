@@ -42,11 +42,11 @@ public class Climbers extends SubsystemBase {
 
   public boolean getLeadTopLimit(){
     //return false;
-    return (leadClimber.getEncoder().getPosition() > 110);
+    return (leadClimber.getEncoder().getPosition() < -110);
   }
 
   public boolean getLeadLowerLimit(){
-    return (leadClimber.getEncoder().getPosition() < 0);
+    return (leadClimber.getEncoder().getPosition() > 0);
     //return false;
   }
 
@@ -95,6 +95,10 @@ public class Climbers extends SubsystemBase {
       SmartDashboard.putNumber("Lead Climber Encoder", leadClimber.getEncoder().getPosition());
       SmartDashboard.putNumber("Follower Climber Encoder", followerClimber.getEncoder().getPosition());
 
+      SmartDashboard.putBoolean("F top bool", getFollowerTopLimit());
+      SmartDashboard.putBoolean("L top bool", getLeadTopLimit());
+      SmartDashboard.putBoolean("F bot bool", getFollowerLowerLimit());
+      SmartDashboard.putBoolean("L Bot bool", getLeadLowerLimit());
 
 
   }

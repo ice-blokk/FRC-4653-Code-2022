@@ -44,11 +44,11 @@ public class AutoDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(((drivetrain.getLeftEncoderDistance() + drivetrain.getRightEncoderDistance()) / 2) >= startValue + distance){
+    if(power < 0 && ((drivetrain.getLeftEncoderDistance() + drivetrain.getRightEncoderDistance()) / 2) >= startValue + distance){
       return true;
     }
 
-    if(((drivetrain.getLeftEncoderDistance() + drivetrain.getRightEncoderDistance()) / 2) >= startValue + distance){
+    if(power > 0 && ((drivetrain.getLeftEncoderDistance() + drivetrain.getRightEncoderDistance()) / 2) <= startValue + distance){
       return true;
     }
 

@@ -30,6 +30,7 @@ public class DefaultClimb extends CommandBase {
   @Override
   public void initialize() {
     position = climber.getFollowerPosition();
+    climber.resetEncoders();
     increment = 2;
 
   }
@@ -46,9 +47,10 @@ public class DefaultClimb extends CommandBase {
 
     if(resetEncoders.getAsBoolean()) {
       climber.resetEncoders();
+      position = 0;
     }
   
-    climber.setLeadPosition(position);
+    climber.setLeadPosition(-position);
     climber.setFollowerPosition(position);
 
     SmartDashboard.putNumber("Climber Increment", position);
@@ -64,3 +66,4 @@ public class DefaultClimb extends CommandBase {
     return false;
   }
 }
+

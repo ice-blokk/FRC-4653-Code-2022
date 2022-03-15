@@ -32,7 +32,7 @@ public final class Constants {
 
     public static final double kLimelightHeight = 50, // inches (total is 4ft 2 in)
                                kTargetHeight = 104, // inches (total is 8 ft 8 in)
-                               kLimelightAngle = 35; // degrees, based from the horizontal
+                               kLimelightAngle = 45; // degrees, based from the horizontal
 
                                 
 

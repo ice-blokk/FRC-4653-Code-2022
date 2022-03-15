@@ -23,7 +23,7 @@ public class JustShoot extends SequentialCommandGroup {
     addCommands(
       new DefaultRotateTurret(() -> 0, () -> true, limelight, turret).withTimeout(2),
 
-      new DefaultShoot(() -> true, () -> false, () -> false, limelight, shooter, transport).withTimeout(3)
+      new DefaultShoot(() -> true, () -> 0, () -> false, () -> false, limelight, shooter, transport).withTimeout(3)
 
     );
   }

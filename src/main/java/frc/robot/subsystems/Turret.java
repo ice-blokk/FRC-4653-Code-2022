@@ -85,6 +85,9 @@ public class Turret extends SubsystemBase {
         turret.set(ControlMode.PercentOutput, 0);
       }
     }
+    else {
+      turret.set(ControlMode.PercentOutput, 0);
+    }
   }
 
   // Tell the talon it is at a certain angle

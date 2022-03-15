@@ -19,15 +19,19 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.Pixy2Obj;
 
 public class Intake extends SubsystemBase {
 
   private final TalonSRX intake;
   private final CANSparkMax arm;
+  private final Pixy2Obj pixy;
 
   public Intake() {
     intake = new TalonSRX(Constants.INTAKE_ADDRESS);
     arm = new CANSparkMax(Constants.ARM_ADDRESS, MotorType.kBrushless);
+
+    pixy = new Pixy2Obj();
 
     intake.setNeutralMode(NeutralMode.Brake);
 
@@ -40,15 +44,15 @@ public class Intake extends SubsystemBase {
   // Check if motor is at its forward soft limit
   public boolean isArmOut() {
     //return arm.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
-    return arm.getEncoder().getPosition() < -220;
-    //return false;
+    //return arm.getEncoder().getPosition() < -225;
+    return false;
   }
 
   // Check if motor is at its reverse soft limit
   public boolean isArmIn() {
     //return arm.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
-    return arm.getEncoder().getPosition() > 0;
-    //return false;
+    //return arm.getEncoder().getPosition() > 0;
+    return false;
   }
 
   public void resetArmEncoder() {
@@ -56,15 +60,15 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeIn() {
-    if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, .8);
-    }
+    //if(isArmOut()) { // if arm isn't fully out, the chain will break
+      intake.set(ControlMode.PercentOutput, .9);
+    //}
   }
 
   public void intakeOut() {
-    if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, -.8);
-    }
+    //if(isArmOut()) { // if arm isn't fully out, the chain will break
+      intake.set(ControlMode.PercentOutput, -.9);
+    //}
   }
 
   public void intakeOff() {
@@ -85,6 +89,10 @@ public class Intake extends SubsystemBase {
 
   public void armOff() {
     arm.set(0);
+  }
+
+  public Pixy2Obj getPixy(){
+    return pixy;
   }
 
   @Override

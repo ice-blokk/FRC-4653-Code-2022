@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.autocommands.DriveOutOfStart;
+import frc.robot.commands.autocommands.DriveThenShootOneBall;
 import frc.robot.commands.autocommands.IntakeBallAndShoot;
 import frc.robot.commands.defaultcommands.DefaultArcadeDrive;
 import frc.robot.commands.defaultcommands.DefaultClimb;
@@ -63,6 +64,7 @@ public class RobotContainer {
     setDefaultCommands();
     configureButtonBindings();
     initializeAutoChooser();
+    SmartDashboard.putData(chooser);
   }
 
   private void setDefaultCommands() {
@@ -81,6 +83,7 @@ public class RobotContainer {
                                                () -> xbox.getAButton(), // arm down
                                                intake));
     shooter.setDefaultCommand(new DefaultShoot(() -> xbox.getRightBumper(), // shoot
+                                               () -> xbox.getRightTriggerAxis(), // shoot low
                                                () -> xbox.getPOV() == 0, // hood up
                                                () -> xbox.getPOV() == 180, // hood down
                                               limelight, shooter, transport));
@@ -103,19 +106,23 @@ public class RobotContainer {
 
     chooser.addOption("Drive Forward", new DriveOutOfStart(drivetrain));
 
-    chooser.addOption("Drive then Intake then Shoot", new IntakeBallAndShoot(drivetrain, intake, transport, shooter, turret, limelight));
+    //chooser.addOption("Drive then Intake then Shoot", new IntakeBallAndShoot(drivetrain, intake, transport, shooter, turret, limelight));
+
+    chooser.addOption("Drive then Shoot One Ball", new DriveThenShootOneBall(drivetrain, shooter, transport, turret, limelight));
 
     SmartDashboard.putData(chooser);
   }
 
   public Command getAutonomousCommand() {
-    return chooser.getSelected();
+    return new DriveThenShootOneBall(drivetrain, shooter, transport, turret, limelight);
   }
 
   public double filter(double value) {
-    if(Math.abs(value) > .05) {
+    if(Math.abs(value) > .15) {
+      return value;
+    }
+    else {
       return 0;
     }
-    return value;
   }
 }

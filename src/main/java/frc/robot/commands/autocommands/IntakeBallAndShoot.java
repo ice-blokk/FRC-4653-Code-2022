@@ -36,7 +36,7 @@ public class IntakeBallAndShoot extends SequentialCommandGroup {
 
       new DefaultRotateTurret(() -> 0, () -> true, limelight, turret).withTimeout(.5),
 
-      new DefaultShoot(() -> true, () -> false, () -> false, limelight, shooter, transport).withTimeout(3)
+      new DefaultShoot(() -> true, () -> 0, () -> false, () -> false, limelight, shooter, transport).withTimeout(3)
       
       
       

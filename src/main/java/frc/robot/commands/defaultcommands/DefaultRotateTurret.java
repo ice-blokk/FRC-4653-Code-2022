@@ -62,6 +62,9 @@ public class DefaultRotateTurret extends CommandBase {
       turret.setOpenLoop(turretTargetPower);
 
     }
+    else if(Math.abs(rotate.getAsDouble()) == 0 && !target.getAsBoolean()) {
+      turret.setOpenLoop(0);
+    }
     else {
       turret.setOpenLoop(0);
     }
