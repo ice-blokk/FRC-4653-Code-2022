@@ -25,13 +25,10 @@ public class Intake extends SubsystemBase {
 
   private final TalonSRX intake;
   private final CANSparkMax arm;
-  private final Pixy2Obj pixy;
 
   public Intake() {
     intake = new TalonSRX(Constants.INTAKE_ADDRESS);
     arm = new CANSparkMax(Constants.ARM_ADDRESS, MotorType.kBrushless);
-
-    pixy = new Pixy2Obj();
 
     intake.setNeutralMode(NeutralMode.Brake);
 
@@ -89,10 +86,6 @@ public class Intake extends SubsystemBase {
 
   public void armOff() {
     arm.set(0);
-  }
-
-  public Pixy2Obj getPixy(){
-    return pixy;
   }
 
   @Override
