@@ -79,6 +79,11 @@ public final class Constants {
                                followerClimberF = 0.00001;
 
 
+    public enum BallColor {
+        BLUE,
+        RED
+    }
+
     // Odometry + Trajectory Constants
 
     // Characterization constants gotten from team 5910 (they seem to work
