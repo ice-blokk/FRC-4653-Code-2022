@@ -27,6 +27,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transport;
 import frc.robot.subsystems.Turret;
 import frc.robot.util.Limelight;
+import frc.robot.util.Pixy2;
+import frc.robot.util.Pixy2Obj;
 
 public class RobotContainer {
 
@@ -38,11 +40,13 @@ public class RobotContainer {
   private Climbers climber;
 
   private Limelight limelight;
+  private Pixy2Obj pixy;
   
   private Joystick stick;
   private XboxController xbox;
 
   private SendableChooser<Command> chooser;
+  private SendableChooser<Enum> ballChooser;
 
   public RobotContainer() {
 
@@ -53,8 +57,8 @@ public class RobotContainer {
     turret = new Turret();
     climber = new Climbers();
 
-
     limelight = new Limelight();
+    pixy = new Pixy2Obj();
 
     stick = new Joystick(0);
     xbox = new XboxController(1);
@@ -101,7 +105,7 @@ public class RobotContainer {
     new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
   }
 
-  private void initializeAutoChooser() {
+  public void initializeAutoChooser() {
     chooser.setDefaultOption("Nothing", null);
 
     chooser.addOption("Drive Forward", new DriveOutOfStart(drivetrain));
@@ -111,6 +115,18 @@ public class RobotContainer {
     chooser.addOption("Drive then Shoot One Ball", new DriveThenShootOneBall(drivetrain, shooter, transport, turret, limelight));
 
     SmartDashboard.putData(chooser);
+  }
+
+  public void initializeBallColorChooser() {
+    ballChooser.setDefaultOption("Red Ball lmao", Constants.BallColor.RED);
+    
+    ballChooser.addOption("Blue Ball lmao", Constants.BallColor.BLUE);
+
+    SmartDashboard.putData(ballChooser);
+  }
+
+  public Enum getBallColor() {
+    return ballChooser.getSelected();
   }
 
   public Command getAutonomousCommand() {
