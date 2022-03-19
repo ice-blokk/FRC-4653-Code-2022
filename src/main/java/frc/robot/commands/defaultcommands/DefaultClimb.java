@@ -13,13 +13,15 @@ import frc.robot.subsystems.Climbers;
 public class DefaultClimb extends CommandBase {
 
   private Climbers climber;
-  private BooleanSupplier up, down, resetEncoders;
-  private double position, increment;
+  private BooleanSupplier up, down, resetEncoders, out, in;
+  private double position, increment, power;
 
   /** Creates a new DefaultClimb. */
-  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier resetEncoders, Climbers climber) {
+  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
     this.up = up;
     this.down = down;
+    this.out = out;
+    this.in = in;
     this.climber = climber;
     this.resetEncoders = resetEncoders;
     
@@ -32,17 +34,30 @@ public class DefaultClimb extends CommandBase {
     position = climber.getFollowerPosition();
     climber.resetEncoders();
     increment = 2;
+    power = 0;
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //main climbers
     if(up.getAsBoolean() && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit()){
       position += increment;
     }
     if(down.getAsBoolean() && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
       position -= increment;
+    }
+
+    //reach climber 
+    if(out.getAsBoolean() && !climber.getReachTopLimit()){
+      power = 1;
+    }
+    else if(in.getAsBoolean() && !climber.getReachLowerLimit()){
+      power = -1;
+    }
+    else {
+      power = 0;
     }
 
     if(resetEncoders.getAsBoolean()) {
@@ -52,13 +67,17 @@ public class DefaultClimb extends CommandBase {
   
     climber.setLeadPosition(-position);
     climber.setFollowerPosition(position);
+    climber.setReachOpenLoop(power);
 
     SmartDashboard.putNumber("Climber Increment", position);
+    SmartDashboard.putNumber("Power for Reach Climber", power);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    climber.setReachOpenLoop(0);
+  }
 
   // Returns true when the command should end.
   @Override

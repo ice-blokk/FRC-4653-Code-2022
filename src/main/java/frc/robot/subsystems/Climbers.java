@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.net.CacheRequest;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
@@ -16,17 +18,20 @@ import frc.robot.Constants;
 
 public class Climbers extends SubsystemBase {
 
-  private CANSparkMax leadClimber, followerClimber;
+  private CANSparkMax leadClimber, followerClimber, reachClimber;
 
   public Climbers() {
     leadClimber = new CANSparkMax(Constants.CLIMBER_LEADER_ADDRESS, MotorType.kBrushless);
     followerClimber = new CANSparkMax(Constants.CLIMBER_FOLLOWER_ADDRESS, MotorType.kBrushless);
+    reachClimber = new CANSparkMax(Constants.CLIMBER_REACH_ADDRESS, MotorType.kBrushless);
 
     leadClimber.restoreFactoryDefaults();
     followerClimber.restoreFactoryDefaults();
+    reachClimber.restoreFactoryDefaults();
 
     leadClimber.setIdleMode(IdleMode.kBrake);
     followerClimber.setIdleMode(IdleMode.kBrake);
+    reachClimber.setIdleMode(IdleMode.kBrake);
 
     leadClimber.getPIDController().setP(Constants.leadClimberP);
     //leadClimber.getPIDController().setI(Constants.leadClimberI);
@@ -40,6 +45,7 @@ public class Climbers extends SubsystemBase {
 
   }
 
+  //lead climber limits
   public boolean getLeadTopLimit(){
     //return false;
     return (leadClimber.getEncoder().getPosition() < -110);
@@ -50,6 +56,7 @@ public class Climbers extends SubsystemBase {
     //return false;
   }
 
+  //follower climber limits
   public boolean getFollowerTopLimit(){
     //return false;
     return (followerClimber.getEncoder().getPosition() > 110);
@@ -60,15 +67,28 @@ public class Climbers extends SubsystemBase {
     return (followerClimber.getEncoder().getPosition() < 0);
   }
 
+
+  //reach climber limits
+  public boolean getReachTopLimit(){
+    return (reachClimber.getEncoder().getPosition() > 110);
+  }
+
+  public boolean getReachLowerLimit(){
+    return (reachClimber.getEncoder().getPosition() < 0);
+  }
+
+  //setting lead climber postition
   public void setLeadPosition(double position){
     //leadClimber.getEncoder().setPosition(position);
     leadClimber.getPIDController().setReference(position, ControlType.kPosition);
   }
 
+  //setting follower climber position
   public void setFollowerPosition(double position){
     //followerClimber.getEncoder().setPosition(position);
     followerClimber.getPIDController().setReference(position, ControlType.kPosition);
   }
+
 
   public double getFollowerPosition() {
     return followerClimber.getEncoder().getPosition();
@@ -82,11 +102,18 @@ public class Climbers extends SubsystemBase {
     followerClimber.set(power);
   }
 
+  public void setReachOpenLoop(double power){
+    reachClimber.set(power);
+  }
+
   public void resetEncoders() {
     leadClimber.getEncoder().setPosition(0);
     followerClimber.getEncoder().setPosition(0);
   }
 
+  public void resetReachEncoder(){
+    reachClimber.getEncoder().setPosition(0);
+  }
 
 
   @Override

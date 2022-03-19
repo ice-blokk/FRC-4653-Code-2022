@@ -65,7 +65,8 @@ public final class Constants {
 
     // Climber constants
     public static final int CLIMBER_LEADER_ADDRESS = 15,
-                            CLIMBER_FOLLOWER_ADDRESS = 14;
+                            CLIMBER_FOLLOWER_ADDRESS = 14,
+                            CLIMBER_REACH_ADDRESS = 90;
 
     //Climber PID/FF Values
     public static final double leadClimberP = 0.1,
