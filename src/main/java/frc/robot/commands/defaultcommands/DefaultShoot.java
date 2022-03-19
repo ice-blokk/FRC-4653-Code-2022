@@ -22,7 +22,7 @@ public class DefaultShoot extends CommandBase {
   private DoubleSupplier shootLow;
   private Shooter shooter;
   private Transport transport;
-  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle;
+  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle, angleForCalc, speedForCalc, finRPM;
 
   public DefaultShoot(BooleanSupplier shoot, DoubleSupplier shootLow, BooleanSupplier up, BooleanSupplier down, Limelight limelight, Shooter shooter, Transport transport) {
     this.shoot = shoot;
@@ -36,6 +36,7 @@ public class DefaultShoot extends CommandBase {
     hoodIncrement = 1;
     manualAngle = shooter.getHoodPosition();
     calculatedAngle = 0;
+
     
     addRequirements(shooter);
   }
@@ -52,6 +53,22 @@ public class DefaultShoot extends CommandBase {
     angleToGoal = (Constants.kLimelightAngle + limelight.getY()) * (Math.PI / 180); // in radians
 
     distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
+
+    // finding the velocity to use in calculations
+    //calculate the angle [deg] and exit velocity [m/s] needed to hit the middle 
+    //of the upper hub from a specified distance [m] , height [m] and angle [degrees].
+
+    distanceToTarget = distanceToTarget * 0.0254;
+
+    angleForCalc = Math.atan((Math.tan(-69) * distanceToTarget - 2 * 2.64) / -distanceToTarget);
+
+    speedForCalc = Math.sqrt((-(9.8 * distanceToTarget * distanceToTarget * (1 + (Math.tan(angleForCalc) * Math.tan(angleForCalc))))) / ((2 * 2.64) - (2 * distanceToTarget * Math.tan(angleForCalc))));
+
+    finRPM = speedForCalc * (39.3701) * (60) * (1 / (Math.PI * 6));
+    
+    //https://www.chiefdelphi.com/t/desmos-trajectory-calculator-for-a-shooter-with-an-adjustable-hood/400024
+    
+
 
     calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 * (distanceToTarget)) + 200.00; 
 
@@ -82,7 +99,35 @@ public class DefaultShoot extends CommandBase {
       //shooter.setHood(manualAngle);
     }
 
-    
+/*
+    if(shoot.getAsBoolean()) {  
+      //shooter.setShooterOpenLoop(.9);
+      shooter.setHoodAngle(angleForCalc);
+      shooter.setShooterRPM(finRPM);
+      if(shooter.getShooterRPM() > finRPM - 200) {
+        transport.setFeeder(-1);
+      }
+      
+    }
+    else if(shootLow.getAsDouble() > .5) {
+      shooter.setShooterOpenLoop(.3);
+      shooter.setHoodAngle(angleForCalc);
+    }
+    else {
+      shooter.setShooterOpenLoop(0);
+    }
+
+    if(up.getAsBoolean()) {
+      angleForCalc += hoodIncrement;
+      //shooter.setHood(manualAngle)
+      ;
+    }
+    else if (down.getAsBoolean()) {
+      angleForCalc -= hoodIncrement;
+      //shooter.setHood(manualAngle);
+    }
+
+    */
 
     //shooter.setHood(.5);
     SmartDashboard.putNumber("Hood Angle", shooter.getHoodAngle());
