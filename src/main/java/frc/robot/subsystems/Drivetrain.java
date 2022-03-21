@@ -52,11 +52,17 @@ public class Drivetrain extends SubsystemBase {
 
 	DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(feedforward, kDriveKinematics, 10);
 	
-  TrajectoryConfig config = new TrajectoryConfig(
-		Constants.kMaxSpeedMetersPerSecond, 
-		Constants.kMaxAccelerationMetersPerSecondSquared)
+	TrajectoryConfig config = new TrajectoryConfig(
+			Constants.kMaxSpeedMetersPerSecond, 
+			Constants.kMaxAccelerationMetersPerSecondSquared)
+			.setKinematics(kDriveKinematics)
+			.addConstraint(autoVoltageConstraint);
+
+	TrajectoryConfig slowConfig = new TrajectoryConfig(
+		.2, 
+		.5)
 		.setKinematics(kDriveKinematics)
-		.addConstraint(autoVoltageConstraint);
+		.addConstraint(autoVoltageConstraint).setReversed(true);
 
   public Drivetrain() {
     frontLeft = new CANSparkMax(Constants.DRIVE_FRONT_LEFT_ADDRESS, MotorType.kBrushless);
@@ -160,6 +166,8 @@ public class Drivetrain extends SubsystemBase {
 		frontRight.getEncoder().setPosition(0);
 		backLeft.getEncoder().setPosition(0);
 		backRight.getEncoder().setPosition(0);
+		leftEncoder.setPosition(0);
+		rightEncoder.setPosition(0);		
 	}
 
   // TODO: get gear ratio of current drivetrain, put it in constants, change 7.31 in methods to constant
@@ -191,6 +199,10 @@ public class Drivetrain extends SubsystemBase {
 
 	public TrajectoryConfig getConfig() {
 		return config;
+	}
+
+	public TrajectoryConfig getSlowConfig() {
+		return slowConfig;
 	}
 
 	public RamseteController getRamseteController() {
@@ -225,6 +237,9 @@ public class Drivetrain extends SubsystemBase {
 	SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
 	SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
 	SmartDashboard.putNumber("Odometry Rotation (degrees)", odometry.getPoseMeters().getRotation().getDegrees());
+
+	SmartDashboard.putNumber("Left Encoder", leftEncoder.getPosition());
+	SmartDashboard.putNumber("Right Encoder", rightEncoder.getPosition());
 
 	SmartDashboard.putNumber("Encoder Average", getEncoderAverage());
   }
