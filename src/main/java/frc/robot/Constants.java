@@ -66,7 +66,7 @@ public final class Constants {
 
     // Climber constants
     public static final int CLIMBER_LEADER_ADDRESS = 15, // spark left
-                            CLIMBER_FOLLOWER_ADDRESS = 14, // spark 
+                            CLIMBER_FOLLOWER_ADDRESS = 14, // spark right
                             CLIMBER_REACH_ADDRESS = 19; // spark
 
     //Climber PID/FF Values
@@ -90,12 +90,27 @@ public final class Constants {
 
     // Characterization constants gotten from team 5910 (they seem to work
     // better than the tool gotten from our testing)
-    public static final double ksVolts = 0.268;
+    // public static final double ksVolts = 0.268;
+    // public static final double kvVoltSecondsPerMeter = 1.89;
+    // public static final double kaVoltSecondsSquaredPerMeter = .0243; // this is the value from team 5190
+
+    // Constants from 1108
+    // https://github.com/frc1108/BabyAckbar/blob/master/src/main/java/frc/robot/Constants.java
+    // public static final double ksVolts = 0.198;   //0.169
+    // public static final double kvVoltSecondsPerMeter = 2.86;  //2.24
+    // public static final double kaVoltSecondsSquaredPerMeter = 0.365;
+
+    // Constants from SysId
+    // public static final double ksVolts = 0.11675;
+    // public static final double kvVoltSecondsPerMeter = 4.2152;
+    // public static final double kaVoltSecondsSquaredPerMeter = 4.4507;
+
+    public static final double ksVolts = 0.11675;
     public static final double kvVoltSecondsPerMeter = 1.89;
-    public static final double kaVoltSecondsSquaredPerMeter = .0243; // this is the value from team 5190
+    public static final double kaVoltSecondsSquaredPerMeter = .0243; 
 
     // P val gotten from characterization
-    public static final double kPDriveVel = 0.205;
+    public static final double kPDriveVel = 0.37742;
 
     public static final double kTrackwidthMeters = 0.5588;
 
