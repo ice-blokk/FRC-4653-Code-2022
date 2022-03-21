@@ -64,11 +64,11 @@ public class DefaultShoot extends CommandBase {
 
     speedForCalc = Math.sqrt((-(9.8 * distanceToTarget * distanceToTarget * (1 + (Math.tan(angleForCalc) * Math.tan(angleForCalc))))) / ((2 * 2.64) - (2 * distanceToTarget * Math.tan(angleForCalc))));
 
-    finRPM = speedForCalc * (39.3701) * (60) * (1 / (Math.PI * 6));
+    finRPM = speedForCalc * (39.3701) * (60) * (1 / (Math.PI * 4.875));
     
     //https://www.chiefdelphi.com/t/desmos-trajectory-calculator-for-a-shooter-with-an-adjustable-hood/400024
     
-
+// inches per minute to revolutions per minute
 
     calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 * (distanceToTarget)) + 200.00; 
 
