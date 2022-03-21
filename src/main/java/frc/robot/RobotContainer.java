@@ -4,16 +4,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ResetOdometry;
 import frc.robot.commands.autocommands.DriveOutOfStart;
 import frc.robot.commands.autocommands.DriveThenShootOneBall;
 import frc.robot.commands.autocommands.IntakeBallAndShoot;
+import frc.robot.commands.autopaths.TestPath;
 import frc.robot.commands.defaultcommands.DefaultArcadeDrive;
 import frc.robot.commands.defaultcommands.DefaultClimb;
 import frc.robot.commands.defaultcommands.DefaultFeedTransport;
@@ -105,6 +110,8 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
+    new JoystickButton(stick, 9).whenPressed(new ResetOdometry(drivetrain));
+    //new JoystickButton(stick, 9).whenPressed(() -> drivetrain.resetOdometry(new Pose2d()));
   }
 
   public void initializeAutoChooser() {
@@ -115,6 +122,13 @@ public class RobotContainer {
     //chooser.addOption("Drive then Intake then Shoot", new IntakeBallAndShoot(drivetrain, intake, transport, shooter, turret, limelight));
 
     chooser.addOption("Drive then Shoot One Ball", new DriveThenShootOneBall(drivetrain, shooter, transport, turret, limelight));
+
+    chooser.addOption(
+			"TestPath", 
+			getRamseteCommand(
+				TestPath.getTraj(drivetrain)
+			)
+		);
 
     SmartDashboard.putData(chooser);
   }
@@ -127,12 +141,30 @@ public class RobotContainer {
     SmartDashboard.putData(ballChooser);
   }
 
+  public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+		RamseteCommand ramseteCommand = new RamseteCommand(
+			trajectory,
+			drivetrain::getPose,
+			drivetrain.getRamseteController(),
+			drivetrain.getFeedforward(),
+			drivetrain.getDriveKinematics(),
+			drivetrain::getWheelSpeeds,
+			drivetrain.getLeftPID(),
+			drivetrain.getRightPID(),
+			drivetrain::tankDriveVolts,
+			drivetrain
+			);
+
+		return ramseteCommand;
+
+	}
+
   public Enum getBallColor() {
     return ballChooser.getSelected();
   }
 
   public Command getAutonomousCommand() {
-    return new DriveThenShootOneBall(drivetrain, shooter, transport, turret, limelight);
+    return chooser.getSelected();
   }
 
   public double filter(double value) {
