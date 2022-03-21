@@ -28,10 +28,11 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     innerIntake = new TalonSRX(Constants.INTAKE_INNER_ADDRESS);
-    outerIntake = new TalonSRX(Constants.INAKE_OUTER_ADDRESS);
+    outerIntake = new TalonSRX(Constants.INTAKE_OUTER_ADDRESS);
     arm = new CANSparkMax(Constants.ARM_ADDRESS, MotorType.kBrushless);
 
-    intake.setNeutralMode(NeutralMode.Brake);
+    innerIntake.setNeutralMode(NeutralMode.Brake);
+    outerIntake.follow(innerIntake);
 
     arm.setIdleMode(IdleMode.kBrake);
 
