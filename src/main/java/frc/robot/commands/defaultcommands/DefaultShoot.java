@@ -58,11 +58,11 @@ public class DefaultShoot extends CommandBase {
     //calculate the angle [deg] and exit velocity [m/s] needed to hit the middle 
     //of the upper hub from a specified distance [m] , height [m] and angle [degrees].
 
-    distanceToTarget = distanceToTarget * 0.0254;
+    //distanceToTarget = distanceToTarget * 0.0254;
 
-    angleForCalc = Math.atan((Math.tan(-69) * distanceToTarget - 2 * 2.64) / -distanceToTarget);
+    angleForCalc = Math.atan((Math.tan(Math.toRadians(-69)) * (distanceToTarget * 0.0254) - 2 * 2.64) / -(distanceToTarget * 0.0254));
 
-    speedForCalc = Math.sqrt((-(9.8 * distanceToTarget * distanceToTarget * (1 + (Math.tan(angleForCalc) * Math.tan(angleForCalc))))) / ((2 * 2.64) - (2 * distanceToTarget * Math.tan(angleForCalc))));
+    speedForCalc = Math.sqrt((-(9.8 * (distanceToTarget * 0.0254) * (distanceToTarget * 0.0254) * (1 + (Math.tan(angleForCalc) * Math.tan(angleForCalc))))) / ((2 * 2.64) - (2 * (distanceToTarget * 0.0254) * Math.tan(angleForCalc))));
 
     finRPM = speedForCalc * (39.3701) * (60) * (1 / (Math.PI * 4.875));
     
@@ -136,6 +136,7 @@ public class DefaultShoot extends CommandBase {
     SmartDashboard.putNumber("Angle to Goal", angleToGoal);
     SmartDashboard.putNumber("Manual Angle", manualAngle);
     SmartDashboard.putNumber("Calculate Anglw", calculatedAngle);
+    SmartDashboard.putNumber("angleForCalc", Math.toDegrees(angleForCalc));
   }
 
 
