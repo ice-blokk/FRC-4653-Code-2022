@@ -88,18 +88,20 @@ public class RobotContainer {
                                                intake));
     shooter.setDefaultCommand(new DefaultShoot(() -> xbox.getRightBumper(), // shoot
                                                () -> xbox.getRightTriggerAxis(), // shoot low
-                                               () -> xbox.getPOV() == 0, // hood up
-                                               () -> xbox.getPOV() == 180, // hood down
+                                               () -> xbox.getPOV() == 90, // hood up
+                                               () -> xbox.getPOV() == 270, // hood down
                                               limelight, shooter, transport));
     turret.setDefaultCommand(new DefaultRotateTurret(() -> filter(xbox.getRightX()), // rotate using the right stick
                                                      () -> xbox.getLeftBumper(), // automatically aim using left bumper   
                                                      limelight, turret));
 
-    climber.setDefaultCommand(new DefaultClimb(() -> stick.getRawButton(8), //climber up
-                                               () -> stick.getRawButton(7), //climber down
+    climber.setDefaultCommand(new DefaultClimb(() -> xbox.getLeftY(), //climber up and down
+                                               () -> xbox.getPOV() == 0, // hooks out
+                                               () -> xbox.getPOV() == 180,// hooks in
                                                () -> stick.getRawButton(12), // reset climber encoders
                                                climber));
   }
+
 
   private void configureButtonBindings() {
     new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);

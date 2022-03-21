@@ -23,11 +23,12 @@ import frc.robot.util.Pixy2Obj;
 
 public class Intake extends SubsystemBase {
 
-  private final TalonSRX intake;
+  private final TalonSRX innerIntake, outerIntake;
   private final CANSparkMax arm;
 
   public Intake() {
-    intake = new TalonSRX(Constants.INTAKE_ADDRESS);
+    innerIntake = new TalonSRX(Constants.INTAKE_INNER_ADDRESS);
+    outerIntake = new TalonSRX(Constants.INAKE_OUTER_ADDRESS);
     arm = new CANSparkMax(Constants.ARM_ADDRESS, MotorType.kBrushless);
 
     intake.setNeutralMode(NeutralMode.Brake);
@@ -58,18 +59,18 @@ public class Intake extends SubsystemBase {
 
   public void intakeIn() {
     //if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, .9);
+      innerIntake.set(ControlMode.PercentOutput, .9);
     //}
   }
 
   public void intakeOut() {
     //if(isArmOut()) { // if arm isn't fully out, the chain will break
-      intake.set(ControlMode.PercentOutput, -.9);
+      innerIntake.set(ControlMode.PercentOutput, -.9);
     //}
   }
 
   public void intakeOff() {
-    intake.set(ControlMode.PercentOutput, 0);
+    innerIntake.set(ControlMode.PercentOutput, 0);
   }
 
   public void armOut() {

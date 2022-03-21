@@ -5,6 +5,7 @@
 package frc.robot.commands.defaultcommands;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,13 +14,13 @@ import frc.robot.subsystems.Climbers;
 public class DefaultClimb extends CommandBase {
 
   private Climbers climber;
-  private BooleanSupplier up, down, resetEncoders, out, in;
+  private BooleanSupplier resetEncoders, out, in;
+  private DoubleSupplier updown;
   private double position, increment, power;
 
   /** Creates a new DefaultClimb. */
-  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
-    this.up = up;
-    this.down = down;
+  public DefaultClimb(DoubleSupplier updown, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
+    this.updown = updown;
     this.out = out;
     this.in = in;
     this.climber = climber;
@@ -42,18 +43,18 @@ public class DefaultClimb extends CommandBase {
   @Override
   public void execute() {
     //main climbers
-    if(up.getAsBoolean() && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit()){
+    if(updown.getAsDouble() > .5 && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit()){
       position += increment;
     }
-    if(down.getAsBoolean() && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
+    if(updown.getAsDouble() < -.5 && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
       position -= increment;
     }
 
     //reach climber 
-    if(out.getAsBoolean() && !climber.getReachTopLimit()){
+    if(out.getAsBoolean() /*&&  !climber.getReachTopLimit() */){
       power = 1;
     }
-    else if(in.getAsBoolean() && !climber.getReachLowerLimit()){
+    else if(in.getAsBoolean() /*&& !climber.getReachLowerLimit() */){
       power = -1;
     }
     else {

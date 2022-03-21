@@ -13,7 +13,8 @@ public final class Constants {
                             DRIVE_BACK_RIGHT_ADDRESS = 4;
 
     // Intake constants
-    public static final int INTAKE_ADDRESS = 11, // talon
+    public static final int INTAKE_INNER_ADDRESS = 11, // talon
+                            INTAKE_OUTER_ADDRESS = 51,
                             ARM_ADDRESS = 7; // spark
 
     public static final double kIntakeArmOutSoftLimit = -16000,
@@ -64,9 +65,9 @@ public final class Constants {
                             TRANSPORT_BEAM_BREAK_ADDRESS = 0; // DIO
 
     // Climber constants
-    public static final int CLIMBER_LEADER_ADDRESS = 15,
-                            CLIMBER_FOLLOWER_ADDRESS = 14,
-                            CLIMBER_REACH_ADDRESS = 90;
+    public static final int CLIMBER_LEADER_ADDRESS = 15, // spark left
+                            CLIMBER_FOLLOWER_ADDRESS = 14, // spark 
+                            CLIMBER_REACH_ADDRESS = 19; // spark
 
     //Climber PID/FF Values
     public static final double leadClimberP = 0.1,
