@@ -25,11 +25,16 @@ public class Intake extends SubsystemBase {
 
   private final TalonSRX innerIntake, outerIntake;
   private final CANSparkMax arm;
+  private final DigitalInput inLimit, outLimit;
 
   public Intake() {
     innerIntake = new TalonSRX(Constants.INTAKE_INNER_ADDRESS);
     outerIntake = new TalonSRX(Constants.INTAKE_OUTER_ADDRESS);
     arm = new CANSparkMax(Constants.ARM_ADDRESS, MotorType.kBrushless);
+
+    inLimit = new DigitalInput(Constants.INTAKE_HALL_EFFECT_IN);
+    outLimit = new DigitalInput(Constants.INTAKE_HALL_EFFECT_OUT);
+
 
     innerIntake.setNeutralMode(NeutralMode.Brake);
     outerIntake.follow(innerIntake);
@@ -44,6 +49,7 @@ public class Intake extends SubsystemBase {
   public boolean isArmOut() {
     //return arm.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
     //return arm.getEncoder().getPosition() < -225;
+    //return outLimit.get();
     return false;
   }
 
@@ -51,6 +57,7 @@ public class Intake extends SubsystemBase {
   public boolean isArmIn() {
     //return arm.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
     //return arm.getEncoder().getPosition() > 0;
+    //return inLimit.get();
     return false;
   }
 
