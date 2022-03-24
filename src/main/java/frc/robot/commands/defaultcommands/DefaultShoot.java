@@ -60,11 +60,11 @@ public class DefaultShoot extends CommandBase {
 
     //distanceToTarget = distanceToTarget * 0.0254;
 
-    angleForCalc = Math.atan((Math.tan(Math.toRadians(-69)) * (distanceToTarget * 0.0254) - 2 * 2.64) / -(distanceToTarget * 0.0254));
+    //angleForCalc = Math.atan((Math.tan(Math.toRadians(-69)) * (distanceToTarget * 0.0254) - 2 * 2.64) / -(distanceToTarget * 0.0254));
 
-    speedForCalc = Math.sqrt((-(9.8 * (distanceToTarget * 0.0254) * (distanceToTarget * 0.0254) * (1 + (Math.tan(angleForCalc) * Math.tan(angleForCalc))))) / ((2 * 2.64) - (2 * (distanceToTarget * 0.0254) * Math.tan(angleForCalc))));
+    //speedForCalc = Math.sqrt((-(9.8 * (distanceToTarget * 0.0254) * (distanceToTarget * 0.0254) * (1 + (Math.tan(angleForCalc) * Math.tan(angleForCalc))))) / ((2 * 2.64) - (2 * (distanceToTarget * 0.0254) * Math.tan(angleForCalc))));
 
-    finRPM = speedForCalc * (39.3701) * (60) * (1 / (Math.PI * 4.875));
+    //finRPM = 2.2 * speedForCalc * (39.3701) * (60) * (1 / (Math.PI * 4.875));
     
     //https://www.chiefdelphi.com/t/desmos-trajectory-calculator-for-a-shooter-with-an-adjustable-hood/400024
     
@@ -74,9 +74,9 @@ public class DefaultShoot extends CommandBase {
 
     if(shoot.getAsBoolean()) {  
       //shooter.setShooterOpenLoop(.9);
-      shooter.setHoodAngle(calculatedAngle);
-      shooter.setShooterRPM(3100);
-      if(shooter.getShooterRPM() > 3000) {
+      //shooter.setHoodAngle(calculatedAngle);
+      shooter.setShooterRPM(3300);
+      if(shooter.getShooterRPM() > 3200) {
         transport.setFeeder(-1);
       }
       
@@ -91,43 +91,42 @@ public class DefaultShoot extends CommandBase {
 
     if(up.getAsBoolean()) {
       manualAngle += hoodIncrement;
-      //shooter.setHood(manualAngle)
+      shooter.setHoodAngle(manualAngle)
       ;
     }
     else if (down.getAsBoolean()) {
       manualAngle -= hoodIncrement;
-      //shooter.setHood(manualAngle);
+      shooter.setHoodAngle(manualAngle);
     }
 
-/*
-    if(shoot.getAsBoolean()) {  
-      //shooter.setShooterOpenLoop(.9);
-      shooter.setHoodAngle(angleForCalc);
-      shooter.setShooterRPM(finRPM);
-      if(shooter.getShooterRPM() > finRPM - 200) {
-        transport.setFeeder(-1);
-      }
+
+    // if(shoot.getAsBoolean()) {  
+    //   //shooter.setShooterOpenLoop(.9);
+    //   shooter.setHoodAngle(Math.toDegrees(angleForCalc) + 35);
+    //   shooter.setShooterRPM(finRPM);
+    //   if(shooter.getShooterRPM() > finRPM - 200) {
+    //     transport.setFeeder(-1);
+    //   }
       
-    }
-    else if(shootLow.getAsDouble() > .5) {
-      shooter.setShooterOpenLoop(.3);
-      shooter.setHoodAngle(angleForCalc);
-    }
-    else {
-      shooter.setShooterOpenLoop(0);
-    }
+    // }
+    // else if(shootLow.getAsDouble() > .5) {
+    //   shooter.setShooterOpenLoop(.3);
+    //   shooter.setHoodAngle(angleForCalc);
+    // }
+    // else {
+    //   shooter.setShooterOpenLoop(0);
+    // }
 
-    if(up.getAsBoolean()) {
-      angleForCalc += hoodIncrement;
-      //shooter.setHood(manualAngle)
-      ;
-    }
-    else if (down.getAsBoolean()) {
-      angleForCalc -= hoodIncrement;
-      //shooter.setHood(manualAngle);
-    }
+    // if(up.getAsBoolean()) {
+    //   angleForCalc += hoodIncrement;
+    //   //shooter.setHood(manualAngle)
+    // }
+    // else if (down.getAsBoolean()) {
+    //   angleForCalc -= hoodIncrement;
+    //   //shooter.setHood(manualAngle);
+    // }
 
-    */
+    
 
     //shooter.setHood(.5);
     SmartDashboard.putNumber("Hood Angle", shooter.getHoodAngle());
