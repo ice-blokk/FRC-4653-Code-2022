@@ -21,11 +21,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
     m_robotContainer.initializeAutoChooser();
+    m_robotContainer.initializeBallColorChooser();
   }
 
   @Override
   public void robotPeriodic() {
-
     CommandScheduler.getInstance().run();
   }
 
