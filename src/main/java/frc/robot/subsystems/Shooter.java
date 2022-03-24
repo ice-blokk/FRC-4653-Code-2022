@@ -25,6 +25,7 @@ public class Shooter extends SubsystemBase {
 
     hoodMover = new Servo(Constants.HOOD_ADJUSTER_ADDRESS);
 
+    leadShooter.setInverted(true);
     followerShooter.follow(leadShooter, true);
 
     leadShooter.setIdleMode(IdleMode.kCoast);
