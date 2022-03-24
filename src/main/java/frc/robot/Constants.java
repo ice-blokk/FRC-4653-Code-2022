@@ -15,14 +15,16 @@ public final class Constants {
     // Intake constants
     public static final int INTAKE_INNER_ADDRESS = 11, // talon
                             INTAKE_OUTER_ADDRESS = 51,
-                            ARM_ADDRESS = 7; // spark
+o                            ARM_ADDRESS = 7, // spark
+                            INTAKE_HALL_EFFECT_IN = 99, // DIO
+                            INTAKE_HALL_EFFECT_OUT = 99; // DIO
 
     public static final double kIntakeArmOutSoftLimit = -16000,
                                kIntakeArmInSoftLimit = 10;
 
     //Shooter Constants
-    public static final int LEAD_SHOOTER_ADDRESS = 5, // spark, facing the front, the motor on the left
-                            FOLLOWER_SHOOTER_ADDRESS = 6, // spark, facing the front, motor is on the right
+    public static final int LEAD_SHOOTER_ADDRESS = 5, // spark, from the back, the motor on the left
+                            FOLLOWER_SHOOTER_ADDRESS = 6, // spark, from the back, motor is on the right
                             HOOD_ADJUSTER_ADDRESS = 9; // rev servo
 
     public static final double kShooterP = 0.00008,
@@ -33,7 +35,7 @@ public final class Constants {
 
     public static final double kLimelightHeight = 50, // inches (total is 4ft 2 in)
                                kTargetHeight = 104, // inches (total is 8 ft 8 in)
-                               kLimelightAngle = 45; // degrees, based from the horizontal
+                               kLimelightAngle = 35; // degrees, based from the horizontal
 
                                 
 
@@ -71,14 +73,14 @@ public final class Constants {
 
     //Climber PID/FF Values
     public static final double leadClimberP = 0.1,
-                               leadClimberI = 0.00001,
-                               leadClimberD = 0.00001,
-                               leadClimberF = 0.00001,
+                               //leadClimberI = 0.00001,
+                               //leadClimberD = 0.00001,
+                               //leadClimberF = 0.00001,
 
-                               followerClimberP = 0.1,
-                               followerClimberI = 0.00001,
-                               followerClimberD = 0.00001,
-                               followerClimberF = 0.00001;
+                               followerClimberP = 0.1;
+                               //followerClimberI = 0.00001,
+                               //followerClimberD = 0.00001,
+                               //followerClimberF = 0.00001;
 
 
     public enum BallColor {
@@ -102,12 +104,16 @@ public final class Constants {
 
     // Constants from SysId
     // public static final double ksVolts = 0.11675;
-    // public static final double kvVoltSecondsPerMeter = 4.2152;
+    // public static final double kvVoltSecondsPerMeter = 4.2152; // theoretically should be around 2.1
     // public static final double kaVoltSecondsSquaredPerMeter = 4.4507;
 
-    public static final double ksVolts = 0.11675;
-    public static final double kvVoltSecondsPerMeter = 1.89;
-    public static final double kaVoltSecondsSquaredPerMeter = .0243; 
+    // public static final double ksVolts = 0.11675;
+    // public static final double kvVoltSecondsPerMeter = 1.89;
+    // public static final double kaVoltSecondsSquaredPerMeter = .0243; 
+
+    public static final double ksVolts = 0.169;
+    public static final double kvVoltSecondsPerMeter = 2.24;
+    public static final double kaVoltSecondsSquaredPerMeter = .365; 
 
     // P val gotten from characterization
     public static final double kPDriveVel = 0.37742;
