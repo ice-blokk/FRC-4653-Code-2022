@@ -4,7 +4,9 @@
 
 package frc.robot.commands.autocommands;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.subsystems.Drivetrain;
 
 
@@ -40,6 +42,7 @@ public class AutoDrive extends CommandBase {
   public void end(boolean interrupted) {
     drivetrain.arcadeDrive(0, 0);
   }
+
 
   // Returns true when the command should end.
   @Override
