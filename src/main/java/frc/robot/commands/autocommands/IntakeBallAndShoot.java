@@ -25,14 +25,14 @@ public class IntakeBallAndShoot extends SequentialCommandGroup {
   public IntakeBallAndShoot(Drivetrain drivetrain, Intake intake, Transport transport, Shooter shooter, Turret turret, Limelight limelight){
 
     addCommands(
-      new RunCommand(() -> intake.armOut(), intake).withInterrupt(() -> intake.isArmOut()),
+      new RunCommand(() -> intake.armOut(), intake).withTimeout(1.2),
 
       new ParallelRaceGroup(
         new RunCommand(() -> intake.intakeIn(), intake),
         new AutoDrive(-.5, 1.5, drivetrain)
       ),
 
-      new AutoTurn(120, .5, drivetrain),
+      new AutoTurn(170, .5, drivetrain),
 
       new DefaultRotateTurret(() -> 0, () -> true, limelight, turret).withTimeout(.5),
 
