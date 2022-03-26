@@ -15,12 +15,13 @@ public class DefaultClimb extends CommandBase {
 
   private Climbers climber;
   private BooleanSupplier resetEncoders, out, in;
-  private DoubleSupplier updown;
+  private BooleanSupplier up, down;
   private double position, increment, power;
 
   /** Creates a new DefaultClimb. */
-  public DefaultClimb(DoubleSupplier updown, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
-    this.updown = updown;
+  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
+    this.up = up;
+    this.down = down;
     this.out = out;
     this.in = in;
     this.climber = climber;
@@ -33,7 +34,7 @@ public class DefaultClimb extends CommandBase {
   @Override
   public void initialize() {
     position = climber.getFollowerPosition();
-    climber.resetEncoders();
+    ///climber.resetEncoders();
     increment = 2;
     power = 0;
 
@@ -43,10 +44,10 @@ public class DefaultClimb extends CommandBase {
   @Override
   public void execute() {
     //main climbers
-    if(updown.getAsDouble() > .5 && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit()){
+    if(up.getAsBoolean()  && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit() ){
       position += increment;
     }
-    if(updown.getAsDouble() < -.5 && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
+    if(down.getAsBoolean()  && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
       position -= increment;
     }
 
