@@ -15,7 +15,7 @@ public final class Constants {
     // Intake constants
     public static final int INTAKE_INNER_ADDRESS = 11, // talon
                             INTAKE_OUTER_ADDRESS = 51,
-o                            ARM_ADDRESS = 7, // spark
+                            ARM_ADDRESS = 7, // spark
                             INTAKE_HALL_EFFECT_IN = 99, // DIO
                             INTAKE_HALL_EFFECT_OUT = 99; // DIO
 
