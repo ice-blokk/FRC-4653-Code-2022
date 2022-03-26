@@ -69,11 +69,14 @@ public class RobotContainer {
     xbox = new XboxController(1);
 
     chooser = new SendableChooser<Command>();
+    ballChooser = new SendableChooser<Enum>();
 
     setDefaultCommands();
     configureButtonBindings();
     initializeAutoChooser();
-    SmartDashboard.putData(chooser);
+    initializeBallColorChooser();
+    //SmartDashboard.putData(chooser);
+    //SmartDashboard.putData(ballChooser);
   }
 
   private void setDefaultCommands() {
@@ -100,17 +103,18 @@ public class RobotContainer {
                                                      () -> xbox.getLeftBumper(), // automatically aim using left bumper   
                                                      limelight, turret));
 
-    climber.setDefaultCommand(new DefaultClimb(() -> xbox.getLeftY(), //climber up and down
-                                               () -> xbox.getPOV() == 0, // hooks out
-                                               () -> xbox.getPOV() == 180,// hooks in
-                                               () -> stick.getRawButton(12), // reset climber encoders
-                                               climber));
+     climber.setDefaultCommand(new DefaultClimb(() -> stick.getRawButton(8), //climber up
+                                                () -> stick.getRawButton(7), // climber down
+                                                () -> xbox.getPOV() == 0, // hooks out
+                                                () -> xbox.getPOV() == 180,// hooks in
+                                                () -> stick.getRawButton(12), // reset climber encoders
+                                                climber));
   }
 
 
   private void configureButtonBindings() {
     new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
-    new JoystickButton(stick, 9).whenPressed(new ResetOdometry(drivetrain));
+    new JoystickButton(stick, 9).whenPressed(new ResetOdometry(drivetrain).withTimeout(.2));
     //new JoystickButton(stick, 9).whenPressed(() -> drivetrain.resetOdometry(new Pose2d()));
   }
 
