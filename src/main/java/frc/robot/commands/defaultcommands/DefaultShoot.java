@@ -69,14 +69,16 @@ public class DefaultShoot extends CommandBase {
     //https://www.chiefdelphi.com/t/desmos-trajectory-calculator-for-a-shooter-with-an-adjustable-hood/400024
     
 // inches per minute to revolutions per minute
+    // old angle
+    // calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 * (distanceToTarget)) + 200.00; 
 
-    calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 * (distanceToTarget)) + 200.00; 
+    calculatedAngle = 263.165-23.4383 * Math.log(111.47*(distanceToTarget)-3677.63);
 
     if(shoot.getAsBoolean()) {  
       //shooter.setShooterOpenLoop(.9);
-      //shooter.setHoodAngle(calculatedAngle);
-      shooter.setShooterRPM(3300);
-      if(shooter.getShooterRPM() > 3200) {
+      shooter.setHoodAngle(calculatedAngle);
+      shooter.setShooterRPM(3200);
+      if(shooter.getShooterRPM() > 3100) {
         transport.setFeeder(-1);
       }
       
