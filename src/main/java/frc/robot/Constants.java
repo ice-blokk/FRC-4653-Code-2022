@@ -16,8 +16,8 @@ public final class Constants {
     public static final int INTAKE_INNER_ADDRESS = 11, // talon
                             INTAKE_OUTER_ADDRESS = 51,
                             ARM_ADDRESS = 7, // spark
-                            INTAKE_HALL_EFFECT_IN = 99, // DIO
-                            INTAKE_HALL_EFFECT_OUT = 99; // DIO
+                            INTAKE_HALL_EFFECT_IN = 8, // DIO
+                            INTAKE_HALL_EFFECT_OUT = 9; // DIO
 
     public static final double kIntakeArmOutSoftLimit = -16000,
                                kIntakeArmInSoftLimit = 10;
@@ -35,7 +35,7 @@ public final class Constants {
 
     public static final double kLimelightHeight = 50, // inches (total is 4ft 2 in)
                                kTargetHeight = 104, // inches (total is 8 ft 8 in)
-                               kLimelightAngle = 35; // degrees, based from the horizontal
+                               kLimelightAngle = 45; // degrees, based from the horizontal
 
                                 
 

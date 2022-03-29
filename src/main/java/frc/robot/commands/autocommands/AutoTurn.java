@@ -35,10 +35,10 @@ public class AutoTurn extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(drivetrain.getAngle() >= startAngle + angle && power > 0) {
+        if(drivetrain.getAngle() >= startAngle + angle && power < 0) {
             return true;
         }
-        if(drivetrain.getAngle() <= startAngle - angle && power < 0) {
+        if(drivetrain.getAngle() <= startAngle - angle && power > 0) {
             return true;
         }
         return false;

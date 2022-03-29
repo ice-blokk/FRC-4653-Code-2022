@@ -49,16 +49,16 @@ public class Intake extends SubsystemBase {
   public boolean isArmOut() {
     //return arm.getForwardLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
     //return arm.getEncoder().getPosition() < -225;
-    //return outLimit.get();
-    return false;
+    return !outLimit.get();
+    //return false;
   }
 
   // Check if motor is at its reverse soft limit
   public boolean isArmIn() {
     //return arm.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen).isPressed();
     //return arm.getEncoder().getPosition() > 0;
-    //return inLimit.get();
-    return false;
+    return !inLimit.get();
+    //return false;
   }
 
   public void resetArmEncoder() {

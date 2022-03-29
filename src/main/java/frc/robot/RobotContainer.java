@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ResetOdometry;
-import frc.robot.commands.autocommands.DriveOutOfStart;
-import frc.robot.commands.autocommands.DriveThenShootOneBall;
-import frc.robot.commands.autocommands.IntakeBallAndShoot;
 import frc.robot.commands.autopaths.TestPath;
+import frc.robot.commands.autoroutines.DriveOutOfStart;
+import frc.robot.commands.autoroutines.DriveThenShootOneBall;
+import frc.robot.commands.autoroutines.IntakeBallAndShoot;
 import frc.robot.commands.defaultcommands.DefaultArcadeDrive;
 import frc.robot.commands.defaultcommands.DefaultClimb;
 import frc.robot.commands.defaultcommands.DefaultFeedTransport;
@@ -113,9 +113,9 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-    new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
+    //new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
     new JoystickButton(stick, 9).whenPressed(new ResetOdometry(drivetrain).withTimeout(.2));
-    //new JoystickButton(stick, 9).whenPressed(() -> drivetrain.resetOdometry(new Pose2d()));
+    new JoystickButton(xbox, 9).whenPressed(() -> drivetrain.resetOdometry(new Pose2d()));
   }
 
   public void initializeAutoChooser() {
@@ -126,6 +126,8 @@ public class RobotContainer {
     //chooser.addOption("Drive then Intake then Shoot", new IntakeBallAndShoot(drivetrain, intake, transport, shooter, turret, limelight));
 
     chooser.addOption("Drive then Shoot One Ball", new DriveThenShootOneBall(drivetrain, shooter, transport, turret, limelight));
+
+    chooser.addOption("Intake one ball and shoot", new IntakeBallAndShoot(drivetrain, intake, transport, shooter, turret, limelight));
 
     chooser.addOption(
 			"TestPath", 

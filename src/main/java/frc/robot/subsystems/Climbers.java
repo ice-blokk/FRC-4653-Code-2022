@@ -48,7 +48,7 @@ public class Climbers extends SubsystemBase {
   //lead climber limits
   public boolean getLeadTopLimit(){
     //return false;
-    return (leadClimber.getEncoder().getPosition() < -110);
+    return (leadClimber.getEncoder().getPosition() < -100);
   }
 
   public boolean getLeadLowerLimit(){
@@ -59,7 +59,7 @@ public class Climbers extends SubsystemBase {
   //follower climber limits
   public boolean getFollowerTopLimit(){
     //return false;
-    return (followerClimber.getEncoder().getPosition() > 110);
+    return (followerClimber.getEncoder().getPosition() > 100);
   }
 
   public boolean getFollowerLowerLimit(){

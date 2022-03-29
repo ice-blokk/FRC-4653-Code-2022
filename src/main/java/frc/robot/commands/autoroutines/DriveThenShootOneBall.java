@@ -2,11 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autocommands;
+package frc.robot.commands.autoroutines;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.autocommands.AutoDrive;
 import frc.robot.commands.defaultcommands.DefaultFeedTransport;
 import frc.robot.commands.defaultcommands.DefaultRotateTurret;
 import frc.robot.commands.defaultcommands.DefaultShoot;
@@ -25,7 +27,7 @@ public class DriveThenShootOneBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoDrive(.5, -1.5, drivetrain),
+      new AutoDrive(.5, -1.0, drivetrain),
 
       new DefaultRotateTurret(() -> 0, () -> true, limelight, turret).withTimeout(1),
 
@@ -36,9 +38,11 @@ public class DriveThenShootOneBall extends SequentialCommandGroup {
       new WaitCommand(2),
 
       new DefaultFeedTransport(() -> true, () -> false, transport).withTimeout(2),
-      new RunCommand(() -> transport.setFeeder(0), transport),
+      new InstantCommand(() -> transport.setFeeder(0), transport),
 
-      new RunCommand(() -> shooter.setShooterOpenLoop(0), shooter)
+      new InstantCommand(() -> shooter.setShooterOpenLoop(0), shooter),
+
+      new AutoDrive(.5, -.5, drivetrain)
 
       //new AutoDrive(.5, -1, drivetrain)
     );
