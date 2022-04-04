@@ -23,15 +23,15 @@ public class Climbers extends SubsystemBase {
   public Climbers() {
     leadClimber = new CANSparkMax(Constants.CLIMBER_LEADER_ADDRESS, MotorType.kBrushless);
     followerClimber = new CANSparkMax(Constants.CLIMBER_FOLLOWER_ADDRESS, MotorType.kBrushless);
-    reachClimber = new CANSparkMax(Constants.CLIMBER_REACH_ADDRESS, MotorType.kBrushless);
+    //reachClimber = new CANSparkMax(Constants.CLIMBER_REACH_ADDRESS, MotorType.kBrushless);
 
     leadClimber.restoreFactoryDefaults();
     followerClimber.restoreFactoryDefaults();
-    reachClimber.restoreFactoryDefaults();
+    //reachClimber.restoreFactoryDefaults();
 
     leadClimber.setIdleMode(IdleMode.kBrake);
     followerClimber.setIdleMode(IdleMode.kBrake);
-    reachClimber.setIdleMode(IdleMode.kBrake);
+    //reachClimber.setIdleMode(IdleMode.kBrake);
 
     leadClimber.getPIDController().setP(Constants.leadClimberP);
     //leadClimber.getPIDController().setI(Constants.leadClimberI);
@@ -68,14 +68,14 @@ public class Climbers extends SubsystemBase {
   }
 
 
-  //reach climber limits
-  public boolean getReachTopLimit(){
-    return (reachClimber.getEncoder().getPosition() > 110);
-  }
+  // //reach climber limits
+  // public boolean getReachTopLimit(){
+  //   return (reachClimber.getEncoder().getPosition() > 110);
+  // }
 
-  public boolean getReachLowerLimit(){
-    return (reachClimber.getEncoder().getPosition() < 0);
-  }
+  // public boolean getReachLowerLimit(){
+  //   return (reachClimber.getEncoder().getPosition() < 0);
+  // }
 
   //setting lead climber postition
   public void setLeadPosition(double position){
@@ -102,18 +102,18 @@ public class Climbers extends SubsystemBase {
     followerClimber.set(power);
   }
 
-  public void setReachOpenLoop(double power){
-    reachClimber.set(power);
-  }
+  // public void setReachOpenLoop(double power){
+  //   reachClimber.set(power);
+  // }
 
   public void resetEncoders() {
     leadClimber.getEncoder().setPosition(0);
     followerClimber.getEncoder().setPosition(0);
   }
 
-  public void resetReachEncoder(){
-    reachClimber.getEncoder().setPosition(0);
-  }
+  // public void resetReachEncoder(){
+  //   reachClimber.getEncoder().setPosition(0);
+  // }
 
 
   @Override

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -12,6 +14,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private UsbCamera usbCamera;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -22,6 +26,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.initializeAutoChooser();
     m_robotContainer.initializeBallColorChooser();
+
+    usbCamera = CameraServer.startAutomaticCapture();
   }
 
   @Override

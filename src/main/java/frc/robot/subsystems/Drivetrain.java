@@ -203,6 +203,10 @@ public class Drivetrain extends SubsystemBase {
 		return config;
 	}
 
+	public TrajectoryConfig getConfig(double velocity, double acceleration, boolean reversed) {
+		return new TrajectoryConfig(velocity, acceleration).setKinematics(kDriveKinematics).addConstraint(autoVoltageConstraint).setReversed(reversed);
+	}
+
 	public TrajectoryConfig getSlowConfig() {
 		return slowConfig;
 	}

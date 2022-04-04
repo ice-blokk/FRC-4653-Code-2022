@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.autocommands.AutoDrive;
 import frc.robot.commands.autocommands.AutoShoot;
 import frc.robot.commands.autocommands.AutoTurn;
@@ -29,7 +30,7 @@ public class IntakeBallAndShoot extends SequentialCommandGroup {
   public IntakeBallAndShoot(Drivetrain drivetrain, Intake intake, Transport transport, Shooter shooter, Turret turret, Limelight limelight){
 
     addCommands(
-      new RunCommand(() -> intake.armOut(), intake).withInterrupt(() -> intake.isArmOut()).withTimeout(2),
+      new RunCommand(() -> intake.armIn(), intake).withInterrupt(() -> intake.isArmOut()).withTimeout(.75),
 
       new InstantCommand(() -> intake.armOff()),
 
@@ -38,12 +39,17 @@ public class IntakeBallAndShoot extends SequentialCommandGroup {
         new AutoDrive(-.5, 1.5, drivetrain)
       ),
 
-      new AutoTurn(170, -.3, drivetrain),
+      new AutoTurn(170, -.4, drivetrain),
+
+      new AutoDrive(-.5, .5, drivetrain),
 
       new DefaultRotateTurret(() -> 0, () -> true, limelight, turret).withTimeout(.5),
 
-      new AutoShoot(4, shooter, transport, limelight)
-      
+      new WaitCommand(2),
+
+      new AutoShoot(4, shooter, transport, limelight),
+
+      new AutoDrive(.5, -1, drivetrain)
 
     );
   }

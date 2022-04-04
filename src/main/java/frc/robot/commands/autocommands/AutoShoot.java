@@ -41,11 +41,11 @@ public class AutoShoot extends CommandBase {
 
     distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
 
-    calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00;
+    calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00 + 34;
 
     shooter.setHoodAngle(calculatedAngle);
-    shooter.setShooterRPM(3400);
-    if (shooter.getShooterRPM() > 3300) {
+    shooter.setShooterRPM(3700);
+    if (shooter.getShooterRPM() > 3600) {
       transport.setFeeder(-1);
     }
   }

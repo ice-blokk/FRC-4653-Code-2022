@@ -88,7 +88,7 @@ public class DefaultShoot extends CommandBase {
 
     // inches per minute to revolutions per minute
     // old angle
-     calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00;
+     calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00 + 34;// - 30.0; // minus 30 because the servo is new
 
     // calculatedAngle = 263.165-23.4383 *
     // Math.log(111.47*(distanceToTarget)-3677.63);
@@ -98,8 +98,8 @@ public class DefaultShoot extends CommandBase {
 
     if (shoot.getAsBoolean()) {
       shooter.setHoodAngle(calculatedAngle);
-      shooter.setShooterRPM(3200);
-      if (shooter.getShooterRPM() > 3100) {
+      shooter.setShooterRPM(3700);
+      if (shooter.getShooterRPM() > 3600) {
         transport.setFeeder(-1);
       }
 

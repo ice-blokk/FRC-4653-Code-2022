@@ -69,7 +69,7 @@ public class DefaultClimb extends CommandBase {
   
     climber.setLeadPosition(-position);
     climber.setFollowerPosition(position);
-    climber.setReachOpenLoop(power);
+    //climber.setReachOpenLoop(power);
 
     SmartDashboard.putNumber("Climber Increment", position);
     SmartDashboard.putNumber("Power for Reach Climber", power);
@@ -78,7 +78,7 @@ public class DefaultClimb extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    climber.setReachOpenLoop(0);
+    //climber.setReachOpenLoop(0);
   }
 
   // Returns true when the command should end.
