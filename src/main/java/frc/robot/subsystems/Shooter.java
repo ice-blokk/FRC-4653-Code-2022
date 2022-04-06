@@ -45,10 +45,16 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setHoodAngle(double degrees) {
-    hoodMover.setAngle(degrees);
+    //if(degrees <= 110 && degrees >= 0) { // limits of the hood
+      hoodMover.setAngle(180 - degrees);
+    //}
   }
 
   public double getHoodAngle() {
+    return 180 - hoodMover.getAngle();
+  }
+
+  public double getActualHoodAngle() {
     return hoodMover.getAngle();
   }
 

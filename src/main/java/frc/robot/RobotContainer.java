@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ResetOdometry;
+import frc.robot.commands.autocommands.AutoPixyFindBall;
 import frc.robot.commands.autopaths.TestPath;
 import frc.robot.commands.autoroutines.DriveOutOfStart;
 import frc.robot.commands.autoroutines.DriveThenShootOneBall;

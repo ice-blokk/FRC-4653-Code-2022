@@ -111,12 +111,12 @@ public final class Constants {
     // public static final double kvVoltSecondsPerMeter = 1.89;
     // public static final double kaVoltSecondsSquaredPerMeter = .0243; 
 
-    public static final double ksVolts = 0.169;
-    public static final double kvVoltSecondsPerMeter = 2.24;
-    public static final double kaVoltSecondsSquaredPerMeter = .365; 
+    public static final double ksVolts = 0.1508;
+    public static final double kvVoltSecondsPerMeter = 1.9751;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.5529; 
 
     // P val gotten from characterization
-    public static final double kPDriveVel = 0.37742;
+    public static final double kPDriveVel = 0.37742;//0.012703;//0.54844;// 
 
     public static final double kTrackwidthMeters = 0.5588;
 

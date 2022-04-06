@@ -25,9 +25,9 @@ import frc.robot.util.Limelight;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeBallAndShoot extends SequentialCommandGroup {
+public class FiveBallAuto extends SequentialCommandGroup {
 
-  public IntakeBallAndShoot(Drivetrain drivetrain, Intake intake, Transport transport, Shooter shooter, Turret turret, Limelight limelight){
+  public FiveBallAuto(Drivetrain drivetrain, Intake intake, Transport transport, Shooter shooter, Turret turret, Limelight limelight){
 
     addCommands(
       new RunCommand(() -> intake.armIn(), intake).withInterrupt(() -> intake.isArmOut()).withTimeout(.75),

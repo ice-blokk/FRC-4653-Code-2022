@@ -22,8 +22,9 @@ public class DefaultShoot extends CommandBase {
   private DoubleSupplier shootLow;
   private Shooter shooter;
   private Transport transport;
-  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle, angleForCalc, speedForCalc,
-      finRPM;
+  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle, 
+  myAngle, myVelocity, myRPM, hoodOffset, angleHeight = -69.0, heightOfTarget = 2.64,
+  inchesInMeter = 39.3701, metersInInch = 0.0254;
 
   public DefaultShoot(BooleanSupplier shoot, DoubleSupplier shootLow, BooleanSupplier up, BooleanSupplier down,
       Limelight limelight, Shooter shooter, Transport transport) {
@@ -58,31 +59,17 @@ public class DefaultShoot extends CommandBase {
     // calculate the angle [deg] and exit velocity [m/s] needed to hit the middle
     // of the upper hub from a specified distance [m] , height [m] and angle
     // [degrees].
-    
-    /*
-             
-        double angle, velocity, rpm;
-        double distance = 160.0; //in inches
+  
          
-        //returns angle in degrees
-        //we will need to at 45 to this value to account for servo motor offset
-        angle = Math.toDegrees(Math.atan((Math.tan(Math.toRadians(-69.0)) * (distance * 0.0254) - 2.0 * 2.64) / -(distance * 0.0254)));
-      
-        //returns velocity in m/s
-        velocity = Math.sqrt(-(9.8 * (distance*0.0254) * (distance * 0.0254) * (1.0 + Math.tan(Math.toRadians(angle)) * Math.tan(Math.toRadians(angle)))) / (2.0 * 2.64 - 2.0 * (distance * 0.0254) * Math.tan(Math.toRadians(angle))));
-        
+    //returns angle in degrees
+    //we will need to add 45 to this value to account for servo motor offset
+    myAngle = Math.toDegrees(Math.atan((Math.tan(Math.toRadians(angleHeight)) * (distanceToTarget * metersInInch) - 2.0 * heightOfTarget) / -(distanceToTarget * metersInInch)));
+  
+    //returns velocity in m/s
+    myVelocity = Math.sqrt(-(9.8 * (distanceToTarget * metersInInch) * (distanceToTarget * metersInInch) * (1.0 + Math.tan(Math.toRadians(myAngle)) * Math.tan(Math.toRadians(myAngle)))) / (2.0 * heightOfTarget - 2.0 * (distanceToTarget * metersInInch) * Math.tan(Math.toRadians(myAngle))));
 
-        System.out.println(angle);
-        
-        System.out.println();
-        System.out.println(velocity);
-        
-        //converts velocity to rpm using wheel diameter (4.875 inches), meters to inches (39.3701), and time
-        rpm = velocity * (39.3701) * (60.0) * (1.0 / (Math.PI * (4.875 / 2.0)));
-    
-        System.out.println(rpm);
-    */
-
+    //converts velocity to rpm using wheel diameter (4.875 inches), meters to inches (39.3701), and time
+    myRPM = myVelocity * (inchesInMeter) * (60.0) * (1.0 / (Math.PI * (4.875 / 2.0))) + 1200;
 
     // https://www.chiefdelphi.com/t/desmos-trajectory-calculator-for-a-shooter-with-an-adjustable-hood/400024
 
@@ -96,10 +83,14 @@ public class DefaultShoot extends CommandBase {
     // (3*(distanceToTarget) / 8) + 75;
     //calculatedAngle = (43 * (Math.pow(distanceToTarget, 3)) / 63000) - (2473 * (Math.pow(distanceToTarget, 2)) / 12600) + ((22787 * distanceToTarget) / 1260) - (1435 / 3);
 
+    
+
+    //TanMan's funky shooter stuff
+
     if (shoot.getAsBoolean()) {
-      shooter.setHoodAngle(calculatedAngle);
-      shooter.setShooterRPM(3700);
-      if (shooter.getShooterRPM() > 3600) {
+      //shooter.setHoodAngle(calculatedAngle);
+      shooter.setShooterRPM(3200);
+      if (shooter.getShooterRPM() > 3150) {
         transport.setFeeder(-1);
       }
 
@@ -112,36 +103,45 @@ public class DefaultShoot extends CommandBase {
     }
 
     if (up.getAsBoolean()) {
-      manualAngle += hoodIncrement;
-      shooter.setHoodAngle(manualAngle);
+      //if(manualAngle <= 180) {
+        manualAngle += hoodIncrement;
+        shooter.setHoodAngle(manualAngle);
+      //}
+      
     } else if (down.getAsBoolean()) {
-      manualAngle -= hoodIncrement;
-      shooter.setHoodAngle(manualAngle);
+      //if(manualAngle >= 0) {
+        manualAngle -= hoodIncrement;
+        shooter.setHoodAngle(manualAngle);
+      //}
+      
     }
+
+    //Brady's funky equation stuff
 
     // if(shoot.getAsBoolean()) {
     // //shooter.setShooterOpenLoop(.9);
-    // shooter.setHoodAngle(Math.toDegrees(angleForCalc) + 35);
-    // shooter.setShooterRPM(finRPM);
-    // if(shooter.getShooterRPM() > finRPM - 200) {
-    // transport.setFeeder(-1);
+    //   shooter.setHoodAngle(myAngle);
+    //   shooter.setShooterRPM(myRPM);
+    // if(shooter.getShooterRPM() > myRPM - 100) {
+    //   transport.setFeeder(-1);
     // }
 
     // }
     // else if(shootLow.getAsDouble() > .5) {
-    // shooter.setShooterOpenLoop(.3);
-    // shooter.setHoodAngle(angleForCalc);
+    //   shooter.setShooterOpenLoop(.3);
+    //   shooter.setHoodAngle(70.0);
+    //   transport.setFeeder(-1);
     // }
     // else {
-    // shooter.setShooterOpenLoop(0);
+    //   shooter.setShooterOpenLoop(0);
     // }
 
     // if(up.getAsBoolean()) {
-    // angleForCalc += hoodIncrement;
+    //   myAngle += hoodIncrement;
     // //shooter.setHood(manualAngle)
     // }
     // else if (down.getAsBoolean()) {
-    // angleForCalc -= hoodIncrement;
+    //   myAngle -= hoodIncrement;
     // //shooter.setHood(manualAngle);
     // }
 
@@ -150,8 +150,8 @@ public class DefaultShoot extends CommandBase {
     SmartDashboard.putNumber("Distance to Target", distanceToTarget);
     SmartDashboard.putNumber("Angle to Goal", angleToGoal);
     SmartDashboard.putNumber("Manual Angle", manualAngle);
-    SmartDashboard.putNumber("Calculate Anglw", calculatedAngle);
-    SmartDashboard.putNumber("angleForCalc", Math.toDegrees(angleForCalc));
+    SmartDashboard.putNumber("Calculate Angle", calculatedAngle);
+    SmartDashboard.putNumber("Brady's Angle", myAngle);
   }
 
   @Override

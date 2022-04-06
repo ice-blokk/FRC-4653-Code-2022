@@ -26,6 +26,7 @@ import frc.robot.util.Pixy2Obj;
 public class Intake extends SubsystemBase {
 
   private final TalonSRX innerIntake, outerIntake, arm;
+  private Pixy2Obj pixy;
   // private final DigitalInput inLimit, outLimit;
 
   public Intake() {
