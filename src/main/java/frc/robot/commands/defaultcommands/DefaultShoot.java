@@ -83,6 +83,11 @@ public class DefaultShoot extends CommandBase {
     // (3*(distanceToTarget) / 8) + 75;
     //calculatedAngle = (43 * (Math.pow(distanceToTarget, 3)) / 63000) - (2473 * (Math.pow(distanceToTarget, 2)) / 12600) + ((22787 * distanceToTarget) / 1260) - (1435 / 3);
 
+    // used https://www.dcode.fr/function-equation-finder for the functions
+    // both are exponential functions
+    // the rpm function has 125 added to the original function
+    // the functions were made using these values: https://docs.google.com/spreadsheets/d/1oF1Whc5szhlyAJpCajlswgqH5JAVL2lJOF6un88h_kU/edit?usp=sharing
+    // with distance as the indendent variable (x value)
     calculatedRPM = 0.0554106 * Math.pow(distanceToTarget, 2.12653) + 2961.58 + 125;
     calculatedAngle = 86.6917 - 0.579964 * Math.pow(distanceToTarget, 0.934045);
     //TanMan's funky shooter stuff
