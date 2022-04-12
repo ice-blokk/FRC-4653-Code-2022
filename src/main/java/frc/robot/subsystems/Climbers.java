@@ -18,20 +18,23 @@ import frc.robot.Constants;
 
 public class Climbers extends SubsystemBase {
 
-  private CANSparkMax leadClimber, followerClimber, reachClimber;
+  private CANSparkMax leadClimber, followerClimber, reachClimber, highClimber;
 
   public Climbers() {
     leadClimber = new CANSparkMax(Constants.CLIMBER_LEADER_ADDRESS, MotorType.kBrushless);
     followerClimber = new CANSparkMax(Constants.CLIMBER_FOLLOWER_ADDRESS, MotorType.kBrushless);
-    //reachClimber = new CANSparkMax(Constants.CLIMBER_REACH_ADDRESS, MotorType.kBrushless);
+    reachClimber = new CANSparkMax(Constants.CLIMBER_REACH_ADDRESS, MotorType.kBrushless);
+    highClimber = new CANSparkMax(Constants.CLIMBER_HIGH_ADDRESS, MotorType.kBrushless);
 
     leadClimber.restoreFactoryDefaults();
     followerClimber.restoreFactoryDefaults();
-    //reachClimber.restoreFactoryDefaults();
+    reachClimber.restoreFactoryDefaults();
+    highClimber.restoreFactoryDefaults();
 
     leadClimber.setIdleMode(IdleMode.kBrake);
     followerClimber.setIdleMode(IdleMode.kBrake);
-    //reachClimber.setIdleMode(IdleMode.kBrake);
+    reachClimber.setIdleMode(IdleMode.kBrake);
+    highClimber.setIdleMode(IdleMode.kBrake);
 
     leadClimber.getPIDController().setP(Constants.leadClimberP);
     //leadClimber.getPIDController().setI(Constants.leadClimberI);
@@ -102,9 +105,9 @@ public class Climbers extends SubsystemBase {
     followerClimber.set(power);
   }
 
-  // public void setReachOpenLoop(double power){
-  //   reachClimber.set(power);
-  // }
+  public void setReachOpenLoop(double power){
+    reachClimber.set(power);
+  }
 
   public void resetEncoders() {
     leadClimber.getEncoder().setPosition(0);
@@ -114,6 +117,10 @@ public class Climbers extends SubsystemBase {
   // public void resetReachEncoder(){
   //   reachClimber.getEncoder().setPosition(0);
   // }
+
+  public void setHighClimberOpenLoop(double power) {
+    highClimber.set(power);
+  }
 
 
   @Override

@@ -31,7 +31,7 @@ public class DefaultRotateTurret extends CommandBase {
     this.target = target;
     this.limelight = limelight;
 
-    pid = new PIDController(.1, 0, 0);
+    pid = new PIDController(.05, 0, 0);
     pid.setSetpoint(0);
 
     addRequirements(turret);

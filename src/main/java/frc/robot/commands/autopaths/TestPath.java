@@ -33,6 +33,9 @@ public final class TestPath {
             drivetrain.getConfig(.5, .5, false)
           );
 
+          var transform = drivetrain.getCurrentPose().minus(testPath.getInitialPose());
+          testPath = testPath.transformBy(transform);
+
         return testPath;
     }
     

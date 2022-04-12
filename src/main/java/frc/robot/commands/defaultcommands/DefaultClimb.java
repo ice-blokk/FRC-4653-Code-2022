@@ -15,17 +15,20 @@ public class DefaultClimb extends CommandBase {
 
   private Climbers climber;
   private BooleanSupplier resetEncoders, out, in;
-  private BooleanSupplier up, down;
+  private BooleanSupplier up, down, highUp, highDown;
   private double position, increment, power;
 
   /** Creates a new DefaultClimb. */
-  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
+  public DefaultClimb(BooleanSupplier up, BooleanSupplier down, BooleanSupplier highUp, BooleanSupplier highDown, BooleanSupplier out, BooleanSupplier in, BooleanSupplier resetEncoders, Climbers climber) {
     this.up = up;
     this.down = down;
     this.out = out;
     this.in = in;
     this.climber = climber;
     this.resetEncoders = resetEncoders;
+
+    this.highUp = highUp;
+    this.highDown = highDown;
     
     addRequirements(climber);
   }
@@ -44,35 +47,52 @@ public class DefaultClimb extends CommandBase {
   @Override
   public void execute() {
     //main climbers
-    if(up.getAsBoolean()  && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit() ){
+    if(up.getAsBoolean() /* && !climber.getLeadTopLimit() && !climber.getFollowerTopLimit() */){
       position += increment;
+      // climber.setLeadPosition(-position);
+      // climber.setFollowerPosition(position);
+      climber.setLeadOpenLoop(-.8);
+      climber.setFollowerOpenLoop(-.8);
     }
-    if(down.getAsBoolean()  && !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit()){
+    else if(down.getAsBoolean()  /*&& !climber.getLeadLowerLimit() && !climber.getFollowerLowerLimit() */){
       position -= increment;
+      // climber.setLeadPosition(-position);
+      // climber.setFollowerPosition(position);
+      climber.setLeadOpenLoop(.8);
+      climber.setFollowerOpenLoop(.8);
+    }
+    else {
+      climber.setFollowerOpenLoop(0);
+      climber.setLeadOpenLoop(0);
+    }
+
+    if(highUp.getAsBoolean()) {
+      climber.setHighClimberOpenLoop(-.9);;
+    }
+    else if (highDown.getAsBoolean()) {
+      climber.setHighClimberOpenLoop(.9);
+    }
+    else {
+      climber.setHighClimberOpenLoop(0);
     }
 
     //reach climber 
     if(out.getAsBoolean() /*&&  !climber.getReachTopLimit() */){
-      power = 1;
+      climber.setReachOpenLoop(1);
     }
     else if(in.getAsBoolean() /*&& !climber.getReachLowerLimit() */){
-      power = -1;
+      climber.setReachOpenLoop(-1);
     }
     else {
-      power = 0;
+      climber.setReachOpenLoop(0);
     }
 
     if(resetEncoders.getAsBoolean()) {
-      climber.resetEncoders();
       position = 0;
+      climber.resetEncoders();
     }
-  
-    climber.setLeadPosition(-position);
-    climber.setFollowerPosition(position);
-    //climber.setReachOpenLoop(power);
 
     SmartDashboard.putNumber("Climber Increment", position);
-    SmartDashboard.putNumber("Power for Reach Climber", power);
   }
 
   // Called once the command ends or is interrupted.

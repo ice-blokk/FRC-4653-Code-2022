@@ -60,11 +60,13 @@ public class Turret extends SubsystemBase {
   }
 
   public boolean getFwdSwitch() {
-    return fwdSwitch.get();
+    //return fwdSwitch.get();
+    return false;
   }
 
   public boolean getRevSwitch() {
-    return revSwitch.get();
+    //return revSwitch.get();
+    return false;
   }
 
   // Manually move the turret (in percent mode)

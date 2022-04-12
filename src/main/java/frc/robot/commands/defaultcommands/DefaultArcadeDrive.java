@@ -7,6 +7,7 @@ package frc.robot.commands.defaultcommands;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -41,6 +42,8 @@ public class DefaultArcadeDrive extends CommandBase {
       sign = -1;
     }
     drivetrain.arcadeDrive(speed.getAsDouble(), rotate.getAsDouble() * rotate.getAsDouble() * sign * .55, invert.getAsBoolean());
+
+    SmartDashboard.putNumber("arcade drive turn", rotate.getAsDouble() * rotate.getAsDouble() * sign * .55);
   }
 
 

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.ResetOdometry;
 import frc.robot.commands.autocommands.AutoDrive;
 import frc.robot.commands.autocommands.AutoRotateTurret;
 import frc.robot.commands.autocommands.AutoShoot;
@@ -29,6 +30,9 @@ public class DriveThenShootOneBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+
+      new InstantCommand(() -> drivetrain.zeroHeading()),
+
       new AutoDrive(.5, -1.0, drivetrain),
 
       new AutoRotateTurret(2, turret, limelight),

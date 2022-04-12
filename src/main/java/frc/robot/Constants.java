@@ -69,7 +69,8 @@ public final class Constants {
     // Climber constants
     public static final int CLIMBER_LEADER_ADDRESS = 15, // spark left
                             CLIMBER_FOLLOWER_ADDRESS = 14, // spark right
-                            CLIMBER_REACH_ADDRESS = 19; // spark
+                            CLIMBER_REACH_ADDRESS = 19, // spark
+                            CLIMBER_HIGH_ADDRESS = 21; // spark
 
     //Climber PID/FF Values
     public static final double leadClimberP = 0.1,
@@ -92,7 +93,7 @@ public final class Constants {
 
     // Characterization constants gotten from team 5910 (they seem to work
     // better than the tool gotten from our testing)
-    // public static final double ksVolts = 0.268;
+    // public static final double ksVolts = 0.00268;
     // public static final double kvVoltSecondsPerMeter = 1.89;
     // public static final double kaVoltSecondsSquaredPerMeter = .0243; // this is the value from team 5190
 
@@ -102,7 +103,7 @@ public final class Constants {
     // public static final double kvVoltSecondsPerMeter = 2.86;  //2.24
     // public static final double kaVoltSecondsSquaredPerMeter = 0.365;
 
-    // Constants from SysId
+    //Constants from SysId
     // public static final double ksVolts = 0.11675;
     // public static final double kvVoltSecondsPerMeter = 4.2152; // theoretically should be around 2.1
     // public static final double kaVoltSecondsSquaredPerMeter = 4.4507;
@@ -113,10 +114,10 @@ public final class Constants {
 
     public static final double ksVolts = 0.1508;
     public static final double kvVoltSecondsPerMeter = 1.9751;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.5529; 
+    public static final double kaVoltSecondsSquaredPerMeter = 0.5529;//0.365;//0.5529; 
 
     // P val gotten from characterization
-    public static final double kPDriveVel = 0.37742;//0.012703;//0.54844;// 
+    public static final double kPDriveVel = 0.54844;//0.37742;//0.012703;//0.54844;// 
 
     public static final double kTrackwidthMeters = 0.5588;
 

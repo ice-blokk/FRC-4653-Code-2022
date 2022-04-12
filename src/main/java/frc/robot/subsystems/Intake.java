@@ -71,17 +71,20 @@ public class Intake extends SubsystemBase {
   public void intakeIn() {
     //if(isArmOut()) { // if arm isn't fully out, the chain will break
       innerIntake.set(ControlMode.PercentOutput, -.9);
+      outerIntake.set(ControlMode.PercentOutput, -.9);
     //}
   }
 
   public void intakeOut() {
     //if(isArmOut()) { // if arm isn't fully out, the chain will break
       innerIntake.set(ControlMode.PercentOutput, .9);
+      outerIntake.set(ControlMode.PercentOutput, .9);
     //}
   }
 
   public void intakeOff() {
     innerIntake.set(ControlMode.PercentOutput, 0);
+    outerIntake.set(ControlMode.PercentOutput, 0);
   }
 
   public void armOut() {

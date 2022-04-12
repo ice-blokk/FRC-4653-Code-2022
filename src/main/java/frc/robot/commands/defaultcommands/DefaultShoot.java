@@ -22,7 +22,7 @@ public class DefaultShoot extends CommandBase {
   private DoubleSupplier shootLow;
   private Shooter shooter;
   private Transport transport;
-  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle, 
+  private double distanceToTarget, angleToGoal, hoodIncrement, manualAngle, calculatedAngle, calculatedRPM, 
   myAngle, myVelocity, myRPM, hoodOffset, angleHeight = -69.0, heightOfTarget = 2.64,
   inchesInMeter = 39.3701, metersInInch = 0.0254;
 
@@ -63,34 +63,34 @@ public class DefaultShoot extends CommandBase {
          
     //returns angle in degrees
     //we will need to add 45 to this value to account for servo motor offset
-    myAngle = Math.toDegrees(Math.atan((Math.tan(Math.toRadians(angleHeight)) * (distanceToTarget * metersInInch) - 2.0 * heightOfTarget) / -(distanceToTarget * metersInInch)));
+    // myAngle = Math.toDegrees(Math.atan((Math.tan(Math.toRadians(angleHeight)) * (distanceToTarget * metersInInch) - 2.0 * heightOfTarget) / -(distanceToTarget * metersInInch)));
   
     //returns velocity in m/s
-    myVelocity = Math.sqrt(-(9.8 * (distanceToTarget * metersInInch) * (distanceToTarget * metersInInch) * (1.0 + Math.tan(Math.toRadians(myAngle)) * Math.tan(Math.toRadians(myAngle)))) / (2.0 * heightOfTarget - 2.0 * (distanceToTarget * metersInInch) * Math.tan(Math.toRadians(myAngle))));
+    // myVelocity = Math.sqrt(-(9.8 * (distanceToTarget * metersInInch) * (distanceToTarget * metersInInch) * (1.0 + Math.tan(Math.toRadians(myAngle)) * Math.tan(Math.toRadians(myAngle)))) / (2.0 * heightOfTarget - 2.0 * (distanceToTarget * metersInInch) * Math.tan(Math.toRadians(myAngle))));
 
     //converts velocity to rpm using wheel diameter (4.875 inches), meters to inches (39.3701), and time
-    myRPM = myVelocity * (inchesInMeter) * (60.0) * (1.0 / (Math.PI * (4.875 / 2.0))) + 1200;
+    // myRPM = myVelocity * (inchesInMeter) * (60.0) * (1.0 / (Math.PI * (4.875 / 2.0))) + 1200;
 
     // https://www.chiefdelphi.com/t/desmos-trajectory-calculator-for-a-shooter-with-an-adjustable-hood/400024
 
     // inches per minute to revolutions per minute
     // old angle
-     calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00 + 34;// - 30.0; // minus 30 because the servo is new
-
+    // calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00 + 34;// - 30.0; // minus 30 because the servo is new
+    
     // calculatedAngle = 263.165-23.4383 *
     // Math.log(111.47*(distanceToTarget)-3677.63);
     // calculatedAngle = -((distanceToTarget)*(distanceToTarget) / 160) +
     // (3*(distanceToTarget) / 8) + 75;
     //calculatedAngle = (43 * (Math.pow(distanceToTarget, 3)) / 63000) - (2473 * (Math.pow(distanceToTarget, 2)) / 12600) + ((22787 * distanceToTarget) / 1260) - (1435 / 3);
 
-    
-
+    calculatedRPM = 0.0554106 * Math.pow(distanceToTarget, 2.12653) + 2961.58 + 125;
+    calculatedAngle = 86.6917 - 0.579964 * Math.pow(distanceToTarget, 0.934045);
     //TanMan's funky shooter stuff
 
     if (shoot.getAsBoolean()) {
-      //shooter.setHoodAngle(calculatedAngle);
-      shooter.setShooterRPM(3200);
-      if (shooter.getShooterRPM() > 3150) {
+      shooter.setHoodAngle(calculatedAngle);
+      shooter.setShooterRPM(calculatedRPM);
+      if (shooter.getShooterRPM() > calculatedRPM - 45) {
         transport.setFeeder(-1);
       }
 

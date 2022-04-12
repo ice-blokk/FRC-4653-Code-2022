@@ -15,7 +15,7 @@ public class AutoShoot extends CommandBase {
   private Limelight limelight;
   private Shooter shooter;
   private Transport transport;
-  private double time, angleToGoal, distanceToTarget, calculatedAngle;
+  private double time, angleToGoal, distanceToTarget, calculatedAngle, calculatedRPM;
   private Timer timer;
   public AutoShoot(double time, Shooter shooter, Transport transport, Limelight limelight) {
     this.shooter = shooter;
@@ -41,11 +41,12 @@ public class AutoShoot extends CommandBase {
 
     distanceToTarget = (Constants.kTargetHeight - Constants.kLimelightHeight) / Math.tan(angleToGoal); // in inches
 
-    calculatedAngle = (0.01667*(distanceToTarget)*(distanceToTarget)) - (3.167 *(distanceToTarget)) + 200.00 + 34;
+    calculatedRPM = 0.0554106 * Math.pow(distanceToTarget, 2.12653) + 2961.58 + 125;
+    calculatedAngle = 86.6917 - 0.579964 * Math.pow(distanceToTarget, 0.934045);
 
     shooter.setHoodAngle(calculatedAngle);
-    shooter.setShooterRPM(3700);
-    if (shooter.getShooterRPM() > 3600) {
+    shooter.setShooterRPM(calculatedRPM);
+    if (shooter.getShooterRPM() > calculatedRPM - 45) {
       transport.setFeeder(-1);
     }
   }

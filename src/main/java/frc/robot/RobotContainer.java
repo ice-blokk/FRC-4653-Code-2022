@@ -106,6 +106,8 @@ public class RobotContainer {
 
      climber.setDefaultCommand(new DefaultClimb(() -> stick.getRawButton(8), //climber up
                                                 () -> stick.getRawButton(7), // climber down
+                                                () -> stick.getRawButton(10), // climber up lead
+                                                () -> stick.getRawButton(9), // climber down lead
                                                 () -> xbox.getPOV() == 0, // hooks out
                                                 () -> xbox.getPOV() == 180,// hooks in
                                                 () -> stick.getRawButton(12), // reset climber encoders
@@ -115,7 +117,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //new JoystickButton(xbox, 9).whenPressed(() -> intake.resetArmEncoder(), intake);
-    new JoystickButton(stick, 9).whenPressed(new ResetOdometry(drivetrain).withTimeout(.2));
+    new JoystickButton(stick, 11).whenPressed(new ResetOdometry(drivetrain).withTimeout(.2));
     new JoystickButton(xbox, 9).whenPressed(() -> drivetrain.resetOdometry(new Pose2d()));
   }
 
